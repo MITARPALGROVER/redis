@@ -1,0 +1,15 @@
+site_name: OpenSource Technology Redis
+nav:
+  - Home : index.md
+  - Introduction : instruction.md
+  - Installation & Setup : installation.md
+  - Getting Started (Basics) : gettingstarted.md
+  - Hands-On Examples : handson.md
+  - Advanced Concepts  : advanced.md
+  - Best Practices  : bestpractices.md
+  - Resources  : resourcse.md
+  - About  : about.md
+
+site_url: https://mydomain.org/mysite
+theme:
+  name: material
