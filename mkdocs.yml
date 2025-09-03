@@ -1,26 +1,80 @@
-site_name: OpenSource Technology Redis
-nav:
-  - Home : index.md
-  - Introduction : instruction.md
-  - Installation & Setup : installation.md
-  - Getting Started (Basics) : gettingstarted.md
-  - Hands-On Examples : handson.md
-  - Advanced Concepts  : advanced.md
-  - Best Practices  : bestpractices.md
-  - Resources  : resourcse.md
-  - About  : about.md
-
+site_name: "Guide to Redis"
+site_description: "A comprehensive guide to Redis for freshers and beginners"
+site_author: "Mitarpal Grover"
 site_url: https://mydomain.org/mysite
+
+# nav:
+#   - Welcome to Redis : index.md
+#   - Introduction : instruction.md
+#   - Installation & Setup : installation.md
+#   - Getting Started (Basics) : gettingstarted.md
+#   - Hands-On Examples : handson.md
+#   - Advanced Concepts  : advanced.md
+#   - Best Practices  : bestpractices.md
+#   - Resources  : resourcse.md
+#   - About  : about.md
+
+
+repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
+repo_name: MITARPALGROVER/redis
+
+extra:
+  social:
+    - icon: fontawesome/brands/linkedin
+      link: https://linkedin.com/in/mitarpalgrover
+    - icon: fontawesome/brands/youtube
+      link: https://youtube.com
+  generator: false
+
+copyright: Copyright &copy; 2025 - 2028 Mitarpal Grover
+
 theme:
+
   name: material
+
+  language: en
+  
+  icon:
+    repo: fontawesome/brands/github
+  
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - search.suggest
+    - search.highlight
+    - search.share
+    - navigation.footer
+    # - navigation.tabs
+    - navigation.top
+    - toc.integrate
+    - content.tabs.link
+    - content.code.copy
+
+
+
+  font:
+    text: Poppins
+    code: Roboto Mono
+
+  logo: assets/logo.png
+  favicon: assets/favicon.ico
+
   palette: 
     - media: "(prefers-color-scheme: light)"
       scheme: default
       toggle:
         icon: material/weather-night
         name: "Switch to dark mode"
+
     - media: "(prefers-color-scheme: dark)"
+      primary: black
       scheme: slate
       toggle:
         icon: material/weather-sunny
         name: "Switch to light mode"
+
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
