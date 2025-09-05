@@ -23,6 +23,12 @@ nav:
     - Hash Operations : core-concepts/hash-operations.md
     - Sorted Set Operations : core-concepts/sorted-set-operations.md
     - Expiration and TTL : core-concepts/expiration-and-ttl.md
+  - Practical Examples :
+    - Caching Basics : practical-examples/caching-basics.md
+    - Session Storage : practical-examples/session-storage.md
+    - Rate Limiting : practical-examples/rate-limiting.md
+    - Leaderboards : practical-examples/leaderboards.md
+    - Real-Time Features : practical-examples/real-time-features.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
