@@ -17,6 +17,7 @@ nav:
     - Configuration Basics : fundamentals/redis_configuration_basics.md
   - Core Concepts :
     - Commands Overview : core-concepts/commands-overview.md
+    - String Operations : core-concepts/string-operations.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
