@@ -9,6 +9,7 @@ nav:
     - What is Redis? : getting-started/what_is_redis.md
     - Installation : getting-started/redis_installation.md
     - First Step : getting-started/redis_first_steps.md
+    - Redis CLI Basics : getting-started/redis_cli_basics.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
@@ -48,6 +49,7 @@ theme:
     - toc.follow
     - content.code.select
     - content.code.annotate
+    
 
 
 
@@ -91,3 +93,4 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
+  - pymdownx.keys
