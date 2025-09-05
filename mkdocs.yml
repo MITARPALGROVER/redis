@@ -13,6 +13,7 @@ nav:
   - Fundamentals :
     - Redis Datatypes : fundamentals/redis_data_types.md
     - Keys And Values : fundamentals/redis_keys_values.md
+    - Memory Persistence : fundamentals/redis_memory_persistence.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
