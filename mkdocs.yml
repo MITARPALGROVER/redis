@@ -12,6 +12,7 @@ nav:
     - Redis CLI Basics : getting-started/redis_cli_basics.md
   - Fundamentals :
     - Redis Datatypes : fundamentals/redis_data_types.md
+    - Keys And Values : fundamentals/redis_keys_values.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
