@@ -19,6 +19,7 @@ nav:
     - Commands Overview : core-concepts/commands-overview.md
     - String Operations : core-concepts/string-operations.md
     - List Operations : core-concepts/list-operations.md
+    - Set Operations : core-concepts/set-operations.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
