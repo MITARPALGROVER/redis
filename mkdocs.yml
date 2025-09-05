@@ -34,6 +34,7 @@ nav:
     - Transactions : advanced-topics/transactions.md
     - Lua Scripting : advanced-topics/lua-scripting.md
     - Clustering : advanced-topics/clustering.md
+    - Replication : advanced-topics/replication.md
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
 repo_name: MITARPALGROVER/redis
