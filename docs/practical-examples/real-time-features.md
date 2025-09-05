@@ -99,6 +99,15 @@ def start_chat_user(username):
 start_chat_user("Alice")
 ```
 
+**Sample Output:**
+```
+Alice joined general_chat. Listening for messages...
+Sent: Alice: Hi everyone!
+📢 Alice: Hi everyone!
+Sent: Alice: How is everyone doing?
+📢 Alice: How is everyone doing?
+```
+
 ## Notifications Example
 
 ```python
@@ -130,6 +139,14 @@ send_notification("user123", "You have a new friend request!")
 send_notification("user123", "Your order has shipped!")
 ```
 
+**Sample Output:**
+```
+Sent notification to user user123
+Sent notification to user user123
+🔔 Notification for user123: {'message': 'You have a new friend request!', 'timestamp': 1693939200.0}
+🔔 Notification for user123: {'message': 'Your order has shipped!', 'timestamp': 1693939201.0}
+```
+
 ## Live Game Updates
 
 ```python
@@ -156,6 +173,19 @@ def watch_game(game_id, fan_name):
 send_game_update("match1", "GOAL! Team A scores!")
 send_game_update("match1", "Yellow card for Player 5")
 send_game_update("match1", "Half-time: Team A 1 - Team B 0")
+```
+
+**Sample Output:**
+```
+Game update sent: GOAL! Team A scores!
+Game update sent: Yellow card for Player 5
+Game update sent: Half-time: Team A 1 - Team B 0
+⚽ Fan1 sees: GOAL! Team A scores!
+⚽ Fan2 sees: GOAL! Team A scores!
+⚽ Fan1 sees: Yellow card for Player 5
+⚽ Fan2 sees: Yellow card for Player 5
+⚽ Fan1 sees: Half-time: Team A 1 - Team B 0
+⚽ Fan2 sees: Half-time: Team A 1 - Team B 0
 ```
 
 ## Intermediate: Multiple Chat Rooms
@@ -218,6 +248,17 @@ def demo_chat_rooms():
     r.publish("chatroom:music", "Diana: I love this new song!")
 
 demo_chat_rooms()
+```
+
+**Sample Output:**
+```
+=== GAMING ROOM ===
+[gaming] Alice: Anyone want to play?
+[gaming] Bob: Sure! Let's play!
+
+=== MUSIC ROOM ===
+[music] Charlie: What's everyone listening to?
+[music] Diana: I love this new song!
 ```
 
 ### Code Explanation

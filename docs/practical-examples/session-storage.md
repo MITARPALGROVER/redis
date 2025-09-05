@@ -137,6 +137,12 @@ print(f"Session data: {session_data}")
 delete_session(session_id)
 ```
 
+**Sample Output:**
+```
+Created session: sess_1693939200_alice
+Session data: {'user_id': '123', 'username': 'alice', 'login_time': '2025-09-06 10:30:00'}
+```
+
 ## Shopping Cart Session
 
 You can store shopping cart items in the session:

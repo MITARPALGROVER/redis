@@ -131,6 +131,22 @@ def demo():
 demo()
 ```
 
+**Sample Output:**
+```
+👂 Alice is listening for news...
+👂 Bob is listening for news...
+📻 Publisher starting...
+✅ Sent: Weather update
+📰 Alice heard: Weather: Sunny today!
+📰 Bob heard: Weather: Sunny today!
+✅ Sent: Sports update
+📰 Alice heard: Sports: Local team wins!
+📰 Bob heard: Sports: Local team wins!
+✅ Sent: Traffic update
+📰 Alice heard: Traffic: Road closure on Main St
+📰 Bob heard: Traffic: Road closure on Main St
+```
+
 ## Code Explanation
 
 Let me explain each part of the Python code:
@@ -230,6 +246,16 @@ def channel_demo():
 channel_demo()
 ```
 
+**Sample Output:**
+```
+👂 Sports Fan listening to: sports
+👂 Weather Watcher listening to: weather, traffic
+✅ Sent messages to sports, weather, and traffic channels
+📻 Sports Fan from sports: Football game starts at 8pm
+📻 Weather Watcher from weather: Temperature: 25°C
+📻 Weather Watcher from traffic: Heavy traffic on Highway 1
+```
+
 ## Pattern Matching
 
 You can subscribe to channels using patterns:
@@ -279,6 +305,14 @@ def test_patterns():
     time.sleep(2)
 
 test_patterns()
+```
+
+**Sample Output:**
+```
+👂 Listening to all game channels...
+🎮 Pattern game* matched game1: Player joined!
+🎮 Pattern game* matched game2: Level completed!
+🎮 Pattern game* matched gameroom: New room created!
 ```
 
 ## When to Use Pub/Sub

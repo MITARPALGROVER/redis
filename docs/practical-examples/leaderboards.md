@@ -93,6 +93,20 @@ get_top_players()
 find_player_rank("alice")
 ```
 
+**Sample Output:**
+```
+Added alice with 500 points
+Added bob with 800 points
+Added charlie with 300 points
+Added diana with 1000 points
+=== TOP 5 PLAYERS ===
+#1: diana - 1000 points
+#2: bob - 800 points
+#3: alice - 500 points
+#4: charlie - 300 points
+alice is rank #3 with 500 points
+```
+
 ## Adding More Points
 
 When someone gets more points, you can update their score:
@@ -119,6 +133,11 @@ def give_points(player_name, points):
 
 # Alice completes a level and gets 100 points
 give_points("alice", 100)
+```
+
+**Sample Output:**
+```
+alice got 100 more points! Now has 600 total
 ```
 
 ## Intermediate: Weekly Leaderboards
@@ -160,6 +179,15 @@ def get_this_weeks_leaders():
 add_weekly_score("alice", 300)
 add_weekly_score("bob", 500)
 get_this_weeks_leaders()
+```
+
+**Sample Output:**
+```
+Added alice to week 2025-Week36 with 300 points
+Added bob to week 2025-Week36 with 500 points
+=== TOP PLAYERS FOR 2025-Week36 ===
+#1: bob - 500 points
+#2: alice - 300 points
 ```
 
 ### Code Explanation

@@ -84,6 +84,11 @@ message = check_if_user_can_try_login("alice")
 print(message)
 ```
 
+**Sample Output:**
+```
+You can try to login
+```
+
 ## Intermediate: Different Time Windows
 
 Once you understand the basics, you might want different rules for different time periods. It's like having rules for eating cookies:
@@ -143,6 +148,11 @@ def check_multiple_limits(username):
 # Test it
 result = check_multiple_limits("bob")
 print(result)
+```
+
+**Sample Output:**
+```
+You can try to login
 ```
 
 ### Code Explanation

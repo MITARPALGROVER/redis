@@ -92,6 +92,16 @@ profile = get_user_profile(123)
 print(profile)
 ```
 
+**Sample Output:**
+```
+🔍 Getting user profile from database... (slow)
+Name: User123, Age: 25, City: New York
+
+# Second call will be faster:
+📦 Found user profile in cache! (fast)
+Name: User123, Age: 25, City: New York
+```
+
 ## Cache for Website Pages
 
 You can also cache entire web pages:
