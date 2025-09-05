@@ -1,7 +1,7 @@
 site_name: "Guide to Redis"
 site_description: "A comprehensive guide to Redis for freshers and beginners"
 site_author: "Mitarpal Grover"
-site_url: https://mydomain.org/mysite
+site_url: https://mitarpalgrover.github.io/redis-documentation/
 
 nav:
   - Welcome to Redis : index.md
@@ -14,7 +14,7 @@ nav:
     - Redis Datatypes : fundamentals/redis_data_types.md
     - Keys And Values : fundamentals/redis_keys_values.md
     - Memory Persistence : fundamentals/redis_memory_persistence.md
-    - Configuration Basics : fundamentals/redis_configuration_basics.md
+    - Configuration Basics : fundamentals/configuration-basics.md
   - Core Concepts :
     - Commands Overview : core-concepts/commands-overview.md
     - String Operations : core-concepts/string-operations.md
