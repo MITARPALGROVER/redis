@@ -36,6 +36,10 @@ nav:
     - Clustering : advanced-topics/clustering.md
     - Replication : advanced-topics/replication.md
     - Security : advanced-topics/security.md
+  - Troubleshooting :
+    - Common Errors : troubleshooting/common-errors.md
+    - Performance Tuning : troubleshooting/performance-tuning.md
+    - Debugging Tips : troubleshooting/debugging-tips.md
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
 repo_name: MITARPALGROVER/redis
