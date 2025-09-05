@@ -1,0 +1,3457 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to Redis for freshers and beginners">
+      
+      
+        <meta name="author" content="Mitarpal Grover">
+      
+      
+        <link rel="canonical" href="https://mydomain.org/mysite/fundamentals/redis_keys_values/">
+      
+      
+        <link rel="prev" href="../redis_data_types/">
+      
+      
+        <link rel="next" href="../redis_memory_persistence/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+    
+    
+      
+        <title>Keys And Values - Guide to Redis</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Poppins";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#keys-and-values" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Guide to Redis" class="md-header__button md-logo" aria-label="Guide to Redis" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guide to Redis
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Keys And Values
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MITARPALGROVER/redis-documentation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MITARPALGROVER/redis
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Guide to Redis" class="md-nav__button md-logo" aria-label="Guide to Redis" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    Guide to Redis
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MITARPALGROVER/redis-documentation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MITARPALGROVER/redis
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Welcome to Redis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/what_is_redis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    What is Redis?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/redis_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/redis_first_steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    First Step
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/redis_cli_basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Redis CLI Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Fundamentals
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../redis_data_types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Redis Datatypes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Keys And Values
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Keys And Values
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-redis-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      What are Redis Keys?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What are Redis Keys?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Characteristics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Naming Conventions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Naming Conventions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-use-descriptive-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Use Descriptive Names
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-hierarchical-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Use Hierarchical Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-common-naming-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Common Naming Patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-naming-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Naming Best Practices
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with Keys
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Working with Keys">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-key-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Key Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safe-key-discovery-with-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Safe Key Discovery with SCAN
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-expiration-and-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Expiration and TTL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Expiration and TTL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-expiration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Expiration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-and-managing-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking and Managing TTL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ttl-return-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTL Return Values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-expiration-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Expiration Examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Values
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#value-types-and-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value Types and Limits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-size-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value Size Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-design-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Design Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Design Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-entity-attribute-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Entity-Attribute Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-time-based-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Time-based Patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-categorization-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Categorization Patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-cache-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Cache Patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pattern Comparison
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-the-right-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing the Right Pattern
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-performance-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Performance Optimization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Performance Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-memory-efficient-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Memory-Efficient Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-key-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Key Distribution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-key-expiration-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Key Expiration Strategies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Exercises
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Exercises">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-user-management-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: User Management System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-e-commerce-cache-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: E-commerce Cache System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-real-time-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Real-time Application
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-analysis-and-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Analysis and Debugging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Analysis and Debugging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Memory Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-distribution-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Distribution Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-hot-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Hot Keys
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-pitfalls-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Pitfalls and Solutions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Pitfalls and Solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-key-naming-inconsistencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Key Naming Inconsistencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-key-explosion" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Key Explosion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-missing-expiration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Missing Expiration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-inefficient-key-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Inefficient Key Patterns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-management-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Management Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's Next?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../redis_memory_persistence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Memory Persistence
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../redis_configuration_basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core Concepts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Core Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/commands-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Commands Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/string-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    String Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/list-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    List Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/set-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Set Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/hash-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hash Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/sorted-set-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sorted Set Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/expiration-and-ttl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Expiration and TTL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Practical Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Practical Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/caching-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Caching Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/session-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Session Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/rate-limiting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rate Limiting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/leaderboards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Leaderboards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/real-time-features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-Time Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/pub-sub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pub/Sub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/transactions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transactions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/lua-scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lua Scripting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Clustering
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Replication
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Security
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Troubleshooting
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/common-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Common Errors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/performance-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Performance Tuning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/debugging-tips/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Debugging Tips
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/useful-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Useful Tools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glossary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/cheat-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/official-docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Official Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-redis-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      What are Redis Keys?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What are Redis Keys?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Characteristics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Naming Conventions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Naming Conventions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-use-descriptive-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Use Descriptive Names
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-hierarchical-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Use Hierarchical Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-common-naming-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Common Naming Patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-naming-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Naming Best Practices
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#working-with-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working with Keys
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Working with Keys">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-key-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Key Operations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#safe-key-discovery-with-scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Safe Key Discovery with SCAN
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-expiration-and-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Expiration and TTL
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Expiration and TTL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-expiration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Expiration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-and-managing-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking and Managing TTL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ttl-return-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      TTL Return Values
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-expiration-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Expiration Examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Values
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#value-types-and-limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value Types and Limits
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-size-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Value Size Considerations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-design-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Design Patterns
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Design Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-entity-attribute-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Entity-Attribute Pattern
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-time-based-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Time-based Patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-categorization-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Categorization Patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-cache-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Cache Patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pattern Comparison
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-the-right-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing the Right Pattern
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-performance-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Performance Optimization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Performance Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-memory-efficient-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Memory-Efficient Keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-key-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Key Distribution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-key-expiration-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Key Expiration Strategies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Exercises
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Exercises">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-user-management-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: User Management System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-e-commerce-cache-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: E-commerce Cache System
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-real-time-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Real-time Application
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-analysis-and-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Analysis and Debugging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Analysis and Debugging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Memory Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-distribution-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Distribution Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-hot-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Hot Keys
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-pitfalls-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Pitfalls and Solutions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Pitfalls and Solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-key-naming-inconsistencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Key Naming Inconsistencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-key-explosion" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Key Explosion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-missing-expiration" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Missing Expiration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-inefficient-key-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Inefficient Key Patterns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-management-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Management Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's Next?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="keys-and-values">Keys and Values</h1>
+<p>Understanding how to work with keys and values effectively is crucial for building scalable Redis applications. Let's master the art of Redis key management!</p>
+<h2 id="what-are-redis-keys">What are Redis Keys?</h2>
+<p>In Redis, <strong>keys</strong> are unique identifiers that point to <strong>values</strong>. Think of keys as addresses and values as the data stored at those addresses.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># Key: &quot;username&quot;    →    Value: &quot;alice_cooper&quot;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a># Key: &quot;user:1001&quot;   →    Value: {&quot;name&quot;: &quot;Alice&quot;, &quot;age&quot;: 25}
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a># Key: &quot;counter:views&quot; →   Value: 1500
+</span></code></pre></div>
+<h3 id="key-characteristics">Key Characteristics</h3>
+<ul>
+<li><strong>Unique</strong>: Each key can exist only once in a database</li>
+<li><strong>Case-sensitive</strong>: <code>User</code> and <code>user</code> are different keys</li>
+<li><strong>Binary safe</strong>: Can contain any byte sequence (including null bytes)</li>
+<li><strong>Maximum size</strong>: 512MB per key (practically much smaller)</li>
+<li><strong>Expire automatically</strong>: Can have TTL (Time To Live)</li>
+</ul>
+<hr />
+<h2 id="key-naming-conventions">Key Naming Conventions</h2>
+<p>Good key naming is essential for maintainable Redis applications.</p>
+<h3 id="1-use-descriptive-names">1. Use Descriptive Names</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># Bad - unclear what this represents
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>SET u1 &quot;john&quot;
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>SET d &quot;2024-01-15&quot;
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a># Good - clear and descriptive
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>SET user:1001:name &quot;john&quot;
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>SET last_backup_date &quot;2024-01-15&quot;
+</span></code></pre></div>
+<h3 id="2-use-hierarchical-structure">2. Use Hierarchical Structure</h3>
+<p>Use colons (<code>:</code>) to create namespaces and hierarchies:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a># User-related keys
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>user:1001:profile          # User profile data
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>user:1001:settings         # User preferences
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>user:1001:sessions         # Active sessions
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a># Product-related keys  
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>product:electronics:456    # Electronics product #456
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>product:books:789         # Books product #789
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a># Application features
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>cache:homepage            # Homepage cache
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>queue:email_tasks        # Email task queue
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>stats:daily:2024-01-15   # Daily statistics
+</span></code></pre></div>
+<h3 id="3-common-naming-patterns">3. Common Naming Patterns</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Example</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type:id</code></td>
+<td><code>user:1001</code></td>
+<td>Single entity</td>
+</tr>
+<tr>
+<td><code>type:id:attribute</code></td>
+<td><code>user:1001:email</code></td>
+<td>Entity attribute</td>
+</tr>
+<tr>
+<td><code>type:category:id</code></td>
+<td><code>product:books:456</code></td>
+<td>Categorized items</td>
+</tr>
+<tr>
+<td><code>app:feature:data</code></td>
+<td><code>cache:user:profile</code></td>
+<td>Application features</td>
+</tr>
+<tr>
+<td><code>date:type:id</code></td>
+<td><code>2024-01:stats:views</code></td>
+<td>Time-based data</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-naming-best-practices">4. Naming Best Practices</h3>
+<div class="admonition tip">
+<p class="admonition-title">Key Naming Guidelines</p>
+<ul>
+<li><strong>Use lowercase</strong> for consistency</li>
+<li><strong>Use underscores or hyphens</strong> for multi-word keys</li>
+<li><strong>Keep keys reasonably short</strong> but descriptive</li>
+<li><strong>Use consistent patterns</strong> across your application</li>
+<li><strong>Avoid special characters</strong> that might cause issues</li>
+</ul>
+</div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># Good examples
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>user:profile:1001
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>session:active:abc123
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>cache:product_list
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>stats:daily:page_views
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>queue:email-notifications
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a># Avoid these patterns
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>User Profile 1001          # Spaces and mixed case
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>session/active/abc123      # Inconsistent separators
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>cache@product#list         # Special characters
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>x                         # Too vague
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>very_long_key_name_that_describes_everything_in_detail  # Too long
+</span></code></pre></div>
+<hr />
+<h2 id="working-with-keys">Working with Keys</h2>
+<h3 id="basic-key-operations">Basic Key Operations</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># Check if key exists
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>127.0.0.1:6379&gt; EXISTS user:1001
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>(integer) 1
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a># Get key type
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>127.0.0.1:6379&gt; TYPE user:1001:profile
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>hash
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a># Rename key
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>127.0.0.1:6379&gt; RENAME old_key new_key
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>OK
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a># Copy key (Redis 6.2+)
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>127.0.0.1:6379&gt; COPY source_key dest_key
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>(integer) 1
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a># Delete keys
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>127.0.0.1:6379&gt; DEL user:1001:temp
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>(integer) 1
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a># Delete multiple keys
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>127.0.0.1:6379&gt; DEL key1 key2 key3
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>(integer) 3
+</span></code></pre></div>
+<h3 id="finding-keys">Finding Keys</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># List all keys (use carefully in production!)
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>127.0.0.1:6379&gt; KEYS *
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a># Find keys with pattern
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>127.0.0.1:6379&gt; KEYS user:*
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>1) &quot;user:1001:profile&quot;
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>2) &quot;user:1001:settings&quot;
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>3) &quot;user:1002:profile&quot;
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a># More specific patterns
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>127.0.0.1:6379&gt; KEYS user:100?:profile  # ? matches single character.,
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>1) &quot;user:1001:profile&quot;
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>2) &quot;user:1002:profile&quot;
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>127.0.0.1:6379&gt; KEYS user:[12]*         # [12] matches 1 or 2
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>1) &quot;user:1001:profile&quot;
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>2) &quot;user:1001:settings&quot;
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>3) &quot;user:2001:profile&quot;
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Production Warning</p>
+<p><code>KEYS *</code> can be slow on large databases. Use <code>SCAN</code> instead for production:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>SCAN 0 MATCH user:* COUNT 100
+</span></code></pre></div></p>
+</div>
+<h3 id="safe-key-discovery-with-scan">Safe Key Discovery with SCAN</h3>
+<p><strong>Why SCAN is better than KEYS:</strong></p>
+<ul>
+<li><strong>Non-blocking</strong>: SCAN doesn't freeze Redis while searching</li>
+<li><strong>Iterative</strong>: Returns results in chunks, not all at once</li>
+<li><strong>Production-safe</strong>: Won't impact performance on large datasets</li>
+<li><strong>Memory-friendly</strong>: Processes keys in batches</li>
+</ul>
+<p><strong>How SCAN works:</strong></p>
+<p>SCAN uses a <strong>cursor-based approach</strong> to iterate through keys:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># Start scanning from cursor 0
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>127.0.0.1:6379&gt; SCAN 0 MATCH user:* COUNT 10
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>1) &quot;5&quot;           # Next cursor to continue from
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>2) 1) &quot;user:1001:profile&quot;
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>   2) &quot;user:1001:settings&quot;
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>   3) &quot;user:1002:profile&quot;
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a># Continue scanning with returned cursor (5)
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>127.0.0.1:6379&gt; SCAN 5 MATCH user:* COUNT 10
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>1) &quot;12&quot;          # Next cursor
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>2) 1) &quot;user:1003:profile&quot;
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>   2) &quot;user:1004:settings&quot;
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a># Continue until cursor returns &quot;0&quot; (scan complete)
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>127.0.0.1:6379&gt; SCAN 12 MATCH user:* COUNT 10
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>1) &quot;0&quot;           # Cursor 0 means scan is complete
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>2) 1) &quot;user:1005:profile&quot;
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>   2) &quot;user:1006:settings&quot;
+</span></code></pre></div>
+<p><strong>SCAN Parameters Explained:</strong></p>
+<ul>
+<li><strong>Cursor</strong>: Position in the keyspace (start with 0, use returned value to continue)</li>
+<li><strong>MATCH</strong>: Pattern to filter keys (optional)</li>
+<li><strong>COUNT</strong>: Hint for how many keys to return per iteration (not exact)</li>
+</ul>
+<p><strong>Important SCAN characteristics:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># COUNT is a hint, not a guarantee
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>SCAN 0 MATCH user:* COUNT 100
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a># Might return 50, 100, or 150 keys depending on Redis internal structure
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a># SCAN can return duplicates across iterations
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a># Always deduplicate results in your application
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a># SCAN guarantees to visit all keys that exist for the full iteration
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a># Keys added during scan might or might not be returned
+</span></code></pre></div>
+<p><strong>SCAN vs KEYS comparison:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>KEYS</th>
+<th>SCAN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Blocking</strong></td>
+<td>Blocks Redis</td>
+<td>Non-blocking</td>
+</tr>
+<tr>
+<td><strong>Memory usage</strong></td>
+<td>High</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>Production safe</strong></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Complete results</strong></td>
+<td>All at once</td>
+<td>All eventually</td>
+</tr>
+<tr>
+<td><strong>Order</strong></td>
+<td>Unordered</td>
+<td>Unordered</td>
+</tr>
+<tr>
+<td><strong>Duplicates</strong></td>
+<td>No duplicates</td>
+<td>Possible duplicates</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Real-world SCAN examples:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a># Find all session keys for cleanup
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>SCAN 0 MATCH &quot;session:*&quot; COUNT 500
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a># Find cache keys to analyze memory usage
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>SCAN 0 MATCH &quot;cache:*&quot; COUNT 100
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a># Find expired temp keys
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>SCAN 0 MATCH &quot;temp:*&quot; COUNT 200
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a># Find all user profile keys
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>SCAN 0 MATCH &quot;user:*:profile&quot; COUNT 300
+</span></code></pre></div>
+<hr />
+<h2 id="key-expiration-and-ttl">Key Expiration and TTL</h2>
+<p>Redis can automatically delete keys after a specified time - perfect for caches, sessions, and temporary data.</p>
+<h3 id="setting-expiration">Setting Expiration</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a># Set key with expiration (seconds)
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>127.0.0.1:6379&gt; SETEX session:abc123 3600 &quot;user_data&quot;
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>OK
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a># Set key with expiration (milliseconds)  
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>127.0.0.1:6379&gt; PSETEX temp:token 30000 &quot;quick_access&quot;
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>OK
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a># Add expiration to existing key
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>127.0.0.1:6379&gt; EXPIRE user:cache 300
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>(integer) 1
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a># Set expiration at specific timestamp
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>127.0.0.1:6379&gt; EXPIREAT user:cache 1757069124
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>(integer) 1
+</span></code></pre></div>
+<p><strong>What does timestamp <code>1757069124</code> mean?</strong></p>
+<p>This is a <strong>Unix timestamp</strong> (also called epoch time) - the number of seconds since January 1, 1970, 00:00:00 UTC.</p>
+<p><strong>Converting the timestamp:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>1757069124 = Fri Sep 05 2025 10:45:24 GMT+0000
+</span></code></pre></div></p>
+<div class="language-text highlight"><span class="filename">Current time in Redis</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a># Current timestamp (example)
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>127.0.0.1:6379&gt; TIME
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>1) &quot;1757069246&quot;  # Current Unix timestamp
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>2) &quot;670472&quot;      # Microseconds  
+</span></code></pre></div>
+<h3 id="checking-and-managing-ttl">Checking and Managing TTL</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a># Check time-to-live (seconds)
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>127.0.0.1:6379&gt; TTL session:abc123
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>(integer) 3456
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a># Check time-to-live (milliseconds)
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>127.0.0.1:6379&gt; PTTL session:abc123
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>(integer) 3456789
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a># Remove expiration (make key persistent)
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>127.0.0.1:6379&gt; PERSIST session:abc123
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>(integer) 1
+</span></code></pre></div>
+<h3 id="ttl-return-values">TTL Return Values</h3>
+<table>
+<thead>
+<tr>
+<th>TTL Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Positive number</strong></td>
+<td>Seconds until expiration</td>
+</tr>
+<tr>
+<td><strong>-1</strong></td>
+<td>Key exists but no expiration set</td>
+</tr>
+<tr>
+<td><strong>-2</strong></td>
+<td>Key does not exist</td>
+</tr>
+</tbody>
+</table>
+<h3 id="practical-expiration-examples">Practical Expiration Examples</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a># User session (1 hour)
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>SETEX session:user123 3600 &quot;logged_in&quot;
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a># Cache entry (10 minutes)
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>SETEX cache:user:profile:456 600 &#39;{&quot;name&quot;:&quot;John&quot;,&quot;email&quot;:&quot;john@example.com&quot;}&#39;
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a># Rate limiting (1 minute window)
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>SETEX rate_limit:api:user123 60 &quot;5&quot;
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a># Temporary verification code (5 minutes)
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>SETEX verify:email:token123 300 &quot;user456&quot;
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a># Daily statistics (expires at midnight)
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a># Calculate seconds until next midnight
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>EXPIREAT stats:daily:2024-01-15 1704153600
+</span></code></pre></div>
+<hr />
+<h2 id="understanding-values">Understanding Values</h2>
+<h3 id="value-types-and-limits">Value Types and Limits</h3>
+<table>
+<thead>
+<tr>
+<th>Value Type</th>
+<th>Max Size</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>String</strong></td>
+<td>512MB</td>
+<td>Text, JSON, counters</td>
+</tr>
+<tr>
+<td><strong>List</strong></td>
+<td>4 billion elements</td>
+<td>Queues, timelines</td>
+</tr>
+<tr>
+<td><strong>Set</strong></td>
+<td>4 billion members</td>
+<td>Tags, unique items</td>
+</tr>
+<tr>
+<td><strong>Hash</strong></td>
+<td>4 billion fields</td>
+<td>Objects, records</td>
+</tr>
+<tr>
+<td><strong>Sorted Set</strong></td>
+<td>4 billion members</td>
+<td>Rankings, scores</td>
+</tr>
+</tbody>
+</table>
+<h3 id="value-size-considerations">Value Size Considerations</h3>
+<p>Ways to find length of different data types:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a># Check value memory usage
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>127.0.0.1:6379&gt; MEMORY USAGE user:1001:profile
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>(integer) 64
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a># String length
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>127.0.0.1:6379&gt; STRLEN user:name
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>(integer) 12
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a># Collection sizes
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>127.0.0.1:6379&gt; LLEN user:activity      # List length
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>127.0.0.1:6379&gt; SCARD user:interests    # Set cardinality
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>127.0.0.1:6379&gt; HLEN user:profile       # Hash length
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>127.0.0.1:6379&gt; ZCARD leaderboard       # Sorted set cardinality
+</span></code></pre></div>
+<hr />
+<h2 id="key-design-patterns">Key Design Patterns</h2>
+<p><strong>Why do we need design patterns for Redis keys?</strong></p>
+<p>Think of key design patterns like organizing your house - you could throw everything randomly in rooms, or you could organize logically (kitchen items in kitchen, bedroom items in bedroom). Redis key patterns help you:</p>
+<ul>
+<li><strong>Find data quickly</strong> - Know exactly where to look</li>
+<li><strong>Scale efficiently</strong> - Handle millions of keys without confusion</li>
+<li><strong>Maintain easily</strong> - Other developers understand your structure</li>
+<li><strong>Avoid conflicts</strong> - Different features don't interfere with each other</li>
+</ul>
+<h3 id="1-entity-attribute-pattern">1. Entity-Attribute Pattern</h3>
+<p><strong>The Problem:</strong> You have complex objects (like users) with multiple pieces of information.</p>
+<p><strong>Bad Approach:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a># Putting everything in one big JSON string
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>SET user_1001 &#39;{&quot;profile&quot;:{&quot;name&quot;:&quot;John&quot;,&quot;email&quot;:&quot;john@example.com&quot;},&quot;settings&quot;:{&quot;theme&quot;:&quot;dark&quot;,&quot;notifications&quot;:&quot;on&quot;},&quot;activity&quot;:[&quot;login&quot;,&quot;view_profile&quot;],&quot;friends&quot;:[&quot;user:1002&quot;,&quot;user:1003&quot;]}&#39;
+</span></code></pre></div></p>
+<p><strong>Problems with bad approach:</strong></p>
+<ul>
+<li>Must fetch ALL data even if you only need the name</li>
+<li>Can't efficiently update just one piece (must rewrite entire JSON)</li>
+<li>Can't use Redis data types optimally</li>
+<li>Memory inefficient for large objects</li>
+</ul>
+<p><strong>Good Approach - Entity-Attribute Pattern:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a># Split entity into logical attributes with appropriate data types
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>user:1001:profile    → Hash: {name: &quot;John&quot;, email: &quot;john@example.com&quot;}
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>user:1001:settings   → Hash: {theme: &quot;dark&quot;, notifications: &quot;on&quot;}
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>user:1001:activity   → List: [&quot;login&quot;, &quot;view_profile&quot;, &quot;update_settings&quot;]
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>user:1001:friends    → Set: [&quot;user:1002&quot;, &quot;user:1003&quot;, &quot;user:1004&quot;]
+</span></code></pre></div></p>
+<p><strong>Why this is better:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a># Get only what you need
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>HGET user:1001:profile name          # Just the name
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>HGETALL user:1001:settings          # All settings
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a># Update efficiently 
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>HSET user:1001:profile email &quot;new@email.com&quot;  # Update only email
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>LPUSH user:1001:activity &quot;logout&quot;             # Add activity without touching profile
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a># Use Redis features
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>SISMEMBER user:1001:friends &quot;user:1002&quot;       # Fast friend check
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>LLEN user:1001:activity                       # Count activities
+</span></code></pre></div></p>
+<p><strong>Real-world example:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a># E-commerce user
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>user:1001:profile     → {name: &quot;Alice&quot;, email: &quot;alice@shop.com&quot;, phone: &quot;+1234567890&quot;}
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>user:1001:cart        → [&quot;product:123&quot;, &quot;product:456&quot;, &quot;product:789&quot;]
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>user:1001:wishlist    → {&quot;product:111&quot;, &quot;product:222&quot;, &quot;product:333&quot;}
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>user:1001:orders      → {order_count: 15, last_order: &quot;2024-01-15&quot;, total_spent: &quot;1299.99&quot;}
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>user:1001:preferences → {currency: &quot;USD&quot;, language: &quot;en&quot;, newsletter: &quot;true&quot;}
+</span></code></pre></div></p>
+<h3 id="2-time-based-patterns">2. Time-based Patterns</h3>
+<p><strong>The Problem:</strong> Your application generates data over time and you need to organize it by periods.</p>
+<p><strong>Bad Approach:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a># All data mixed together
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>SET stats_data &#39;{&quot;2024-01-15&quot;:{&quot;page_views&quot;:15234,&quot;users&quot;:3456},&quot;2024-01-16&quot;:{&quot;page_views&quot;:16789,&quot;users&quot;:3891}}&#39;
+</span></code></pre></div></p>
+<p><strong>Problems:</strong></p>
+<ul>
+<li>Must parse entire JSON to get one day's data</li>
+<li>Gets huge as time progresses</li>
+<li>Can't set different expiration for different days</li>
+<li>Hard to analyze trends</li>
+</ul>
+<p><strong>Good Approach - Time-based Pattern:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a># Organize by time periods
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a># Daily metrics
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>stats:2024-01-15:page_views     → String: &quot;15234&quot;
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>stats:2024-01-15:unique_users   → String: &quot;3456&quot;
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>stats:2024-01-16:page_views     → String: &quot;16789&quot;
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>stats:2024-01-16:unique_users   → String: &quot;3891&quot;
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a># Hourly data for detailed analysis
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>logs:2024-01-15:14:errors      → List: [&quot;404 error on /api/users&quot;, &quot;500 error in database&quot;]
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>logs:2024-01-15:15:errors      → List: [&quot;timeout in payment service&quot;]
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>cache:2024-01-15:14:trending   → Sorted Set: {topic1: 150, topic2: 89, topic3: 234}
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a># User activity by date
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>user:1001:activity:2024-01-15  → List: [&quot;login&quot;, &quot;view_profile&quot;, &quot;update_settings&quot;]
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>user:1001:activity:2024-01-16  → List: [&quot;login&quot;, &quot;purchase&quot;, &quot;logout&quot;]
+</span></code></pre></div></p>
+<p><strong>Why this is better:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a># Get specific time period data
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>GET stats:2024-01-15:page_views              # Just today&#39;s views
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>LRANGE user:1001:activity:2024-01-15 0 -1   # Today&#39;s user activity
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a># Set different expiration policies
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>EXPIRE logs:2024-01-15:14:errors 604800     # Keep logs for 1 week
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>EXPIRE stats:2024-01-15:page_views 2592000  # Keep stats for 30 days
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a># Easy time-based cleanup
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>DEL stats:2024-01-01:*                      # Delete old January data
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a># Analyze trends across time
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>for date in 2024-01-{01..31}; do
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>    redis-cli GET &quot;stats:$date:page_views&quot;
+</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>done
+</span></code></pre></div></p>
+<p><strong>Real-world example:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a># Web analytics
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>analytics:2024-01-15:page_views → &quot;15234&quot;
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>analytics:2024-01-15:unique_visitors → &quot;3456&quot;
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>analytics:2024-01-15:bounce_rate → &quot;45.6&quot;
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a># Error tracking
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>errors:2024-01-15:api:count → &quot;23&quot;
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>errors:2024-01-15:database:count → &quot;5&quot;
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>errors:2024-01-15:critical → List: [&quot;payment_failed&quot;, &quot;auth_timeout&quot;]
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a># User engagement by hour
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>engagement:2024-01-15:09:active_users → &quot;1234&quot;
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>engagement:2024-01-15:10:active_users → &quot;2345&quot;
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>engagement:2024-01-15:11:active_users → &quot;3456&quot;
+</span></code></pre></div></p>
+<h3 id="3-categorization-patterns">3. Categorization Patterns</h3>
+<p><strong>The Problem:</strong> You have different types of content that need different treatment.</p>
+<p><strong>Bad Approach:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a># Everything mixed together
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>SET all_products &#39;{&quot;electronics&quot;:{&quot;featured&quot;:[&quot;laptop&quot;,&quot;phone&quot;]},&quot;books&quot;:{&quot;bestsellers&quot;:[&quot;book1&quot;,&quot;book2&quot;]},&quot;clothing&quot;:{&quot;sale&quot;:[&quot;shirt&quot;,&quot;pants&quot;]}}&#39;
+</span></code></pre></div></p>
+<p><strong>Problems:</strong></p>
+<ul>
+<li>Can't efficiently query one category</li>
+<li>Different categories have different needs (sorting, filtering)</li>
+<li>Hard to add new categories</li>
+</ul>
+<p><strong>Good Approach - Categorization Pattern:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a># Separate by category and use appropriate data structures
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a># Product categories
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>products:electronics:featured   → Sorted Set: {laptop: 95, smartphone: 89, tablet: 76}
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>products:books:bestsellers     → Sorted Set: {book1: 150, book2: 120, book3: 98}
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>products:clothing:sale         → Set: {&quot;shirt_123&quot;, &quot;pants_456&quot;, &quot;jacket_789&quot;}
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a># Content types
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>content:articles:published     → Set: {&quot;article_001&quot;, &quot;article_002&quot;, &quot;article_003&quot;}
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>content:videos:trending       → Sorted Set: {video1: 1500, video2: 1200, video3: 950}
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>content:images:recent         → List: [&quot;img_001&quot;, &quot;img_002&quot;, &quot;img_003&quot;]  # Chronological order
+</span></code></pre></div></p>
+<p><strong>Why this is better:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a># Category-specific operations
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>ZREVRANGE products:electronics:featured 0 2 WITHSCORES  # Top 3 electronics
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>SCARD products:clothing:sale                            # Count of sale items
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>SISMEMBER content:articles:published &quot;article_001&quot;     # Check if published
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a># Category-specific expiration
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>EXPIRE content:images:recent 86400                      # Recent images expire daily
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a># articles:published never expires (permanent content)
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a># Easy category management
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>SADD products:clothing:sale &quot;new_jacket_999&quot;           # Add to sale
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>ZREM products:electronics:featured &quot;old_laptop&quot;        # Remove from featured
+</span></code></pre></div></p>
+<p><strong>Real-world example:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a># News website
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>news:sports:trending     → Sorted Set: {article1: 250, article2: 180, article3: 120}
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>news:politics:breaking   → List: [&quot;breaking1&quot;, &quot;breaking2&quot;]  # Chronological
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>news:tech:featured      → Set: {&quot;tech1&quot;, &quot;tech2&quot;, &quot;tech3&quot;}
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a># Social media
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>posts:images:recent     → List: [&quot;img1&quot;, &quot;img2&quot;, &quot;img3&quot;]
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>posts:videos:popular    → Sorted Set: {vid1: 1500, vid2: 1200}
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>posts:text:trending     → Sorted Set: {post1: 89, post2: 76}
+</span></code></pre></div></p>
+<h3 id="4-cache-patterns">4. Cache Patterns</h3>
+<p><strong>The Problem:</strong> You need to cache different types of data with different strategies.</p>
+<p><strong>Bad Approach:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a># Generic cache without structure
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>SET cache_1 &quot;some homepage html&quot;
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>SET cache_2 &quot;some user list&quot;
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>SET cache_3 &quot;some search results&quot;
+</span></code></pre></div></p>
+<p><strong>Problems:</strong></p>
+<ul>
+<li>Can't manage different cache types differently</li>
+<li>No way to clear specific cache categories</li>
+<li>Hard to set appropriate expiration times</li>
+</ul>
+<p><strong>Good Approach - Cache Pattern:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a># Structured cache with clear purposes
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a># Page cache (HTML content)
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>cache:page:/homepage           → String: &quot;&lt;html&gt;...&lt;/html&gt;&quot;
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>cache:page:/products/123       → String: &quot;&lt;html&gt;product page...&lt;/html&gt;&quot;
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a># API response cache (JSON data)
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>cache:api:users:list           → String: &#39;[{&quot;id&quot;:1,&quot;name&quot;:&quot;John&quot;}...]&#39;
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>cache:api:products:search:laptop → String: &#39;{&quot;total&quot;:45,&quot;products&quot;:[...]}&#39;
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a># Query result cache (processed data)
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>cache:query:popular_posts      → List: [&quot;post_123&quot;, &quot;post_456&quot;, &quot;post_789&quot;]
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>cache:query:user_count         → String: &quot;15234&quot;
+</span></code></pre></div></p>
+<p><strong>Why this is better:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a># Different expiration strategies
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>SETEX cache:page:/homepage 300 &quot;&lt;html&gt;...&quot;          # Page cache: 5 minutes
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>SETEX cache:api:users:list 600 &#39;[{&quot;id&quot;:1}...]&#39;      # API cache: 10 minutes  
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>SETEX cache:query:popular_posts 3600 &#39;[&quot;post1&quot;]&#39;    # Query cache: 1 hour
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a># Selective cache clearing
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>DEL cache:page:*           # Clear all page cache
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>DEL cache:api:users:*      # Clear user-related API cache
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>DEL cache:query:*          # Clear all query cache
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a># Cache monitoring
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>KEYS cache:page:*          # See all cached pages
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>KEYS cache:api:*           # See all cached API responses
+</span></code></pre></div></p>
+<p><strong>Real-world example:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a># E-commerce site
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>cache:page:homepage → &quot;&lt;html&gt;homepage content&lt;/html&gt;&quot;
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>cache:page:category:electronics → &quot;&lt;html&gt;electronics page&lt;/html&gt;&quot;
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>cache:api:product:123:details → &#39;{&quot;name&quot;:&quot;Laptop&quot;,&quot;price&quot;:999}&#39;
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>cache:search:query:laptop:page:1 → &#39;{&quot;total&quot;:45,&quot;products&quot;:[...]}&#39;
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>cache:user:1001:recommendations → &#39;[&quot;product:789&quot;,&quot;product:456&quot;]&#39;
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a># Different TTL for different cache types
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>SETEX cache:page:homepage 600 &quot;...&quot;           # 10 minutes (changes often)
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>SETEX cache:api:product:123:details 3600 &quot;...&quot; # 1 hour (stable data)
+</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>SETEX cache:search:query:laptop:page:1 1800 &quot;...&quot; # 30 minutes (search results)
+</span></code></pre></div></p>
+<h3 id="pattern-comparison">Pattern Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Best For</th>
+<th>Key Structure</th>
+<th>Data Types Used</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Entity-Attribute</strong></td>
+<td>Complex objects</td>
+<td><code>entity:id:attribute</code></td>
+<td>Hash, List, Set</td>
+</tr>
+<tr>
+<td><strong>Time-based</strong></td>
+<td>Time-series data</td>
+<td><code>type:date:metric</code></td>
+<td>String, List, Sorted Set</td>
+</tr>
+<tr>
+<td><strong>Categorization</strong></td>
+<td>Different content types</td>
+<td><code>type:category:data</code></td>
+<td>Set, Sorted Set, List</td>
+</tr>
+<tr>
+<td><strong>Cache</strong></td>
+<td>Temporary data</td>
+<td><code>cache:type:identifier</code></td>
+<td>String (mostly)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="choosing-the-right-pattern">Choosing the Right Pattern</h3>
+<p><strong>Use Entity-Attribute when:</strong></p>
+<ul>
+<li>You have complex objects (users, products, orders)</li>
+<li>Different parts are accessed separately</li>
+<li>You need efficient partial updates</li>
+</ul>
+<p><strong>Use Time-based when:</strong></p>
+<ul>
+<li>You generate data over time (logs, metrics, events)</li>
+<li>You need time-based analysis</li>
+<li>You want automatic cleanup of old data</li>
+</ul>
+<p><strong>Use Categorization when:</strong></p>
+<ul>
+<li>You have different types of content</li>
+<li>Different types need different operations</li>
+<li>You want category-specific management</li>
+</ul>
+<p><strong>Use Cache when:</strong></p>
+<ul>
+<li>You're storing temporary data</li>
+<li>You need different expiration strategies</li>
+<li>You want selective cache clearing</li>
+</ul>
+<hr />
+<h2 id="key-performance-optimization">Key Performance Optimization</h2>
+<h3 id="1-memory-efficient-keys">1. Memory-Efficient Keys</h3>
+<p><strong>Why key length matters:</strong> Redis stores every key name in memory. With millions of keys, longer names consume significantly more RAM.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a># Use shorter keys when possible
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a># Less efficient (45 bytes for key name)
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>SET user:profile:personal_information:full_name &quot;John Smith&quot;
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a># More efficient (11 bytes for key name)
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>SET u:p:1001:name &quot;John Smith&quot;
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a># But balance with readability for maintenance
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a># Good compromise (16 bytes for key name)
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>SET user:1001:name &quot;John Smith&quot;
+</span></code></pre></div>
+<p><strong>Memory savings example:</strong> With 1 million user keys, the difference between <code>user:profile:personal_information:full_name</code> (45 bytes) and <code>user:1001:name</code> (16 bytes) saves about 29MB of RAM just for key names!</p>
+<h3 id="2-key-distribution">2. Key Distribution</h3>
+<p><strong>Why distribution matters:</strong> Redis stores keys in hash slots. If all keys start with the same prefix, they might end up in the same hash slot, creating a "hot spot" that gets overloaded.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a># Distribute keys across keyspace to avoid hot spots
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a># All keys start with same prefix (potential hotspot)
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>SET user_1001_profile &quot;data&quot;
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>SET user_1002_profile &quot;data&quot; 
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>SET user_1003_profile &quot;data&quot;
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a># Better distribution
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>SET profile:user:1001 &quot;data&quot;
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>SET settings:user:1001 &quot;data&quot;
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>SET activity:user:1001 &quot;data&quot;
+</span></code></pre></div>
+<h3 id="3-key-expiration-strategies">3. Key Expiration Strategies</h3>
+<p><strong>Why stagger expiration:</strong> If many keys expire at exactly the same time, Redis might lag while deleting them all at once.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a># Stagger expiration times to avoid mass expiration
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>BASE_TTL=3600
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>JITTER=$((RANDOM % 300))  # 0-300 seconds
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>FINAL_TTL=$((BASE_TTL + JITTER))
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>redis-cli SETEX &quot;cache:user:$USER_ID&quot; &quot;$FINAL_TTL&quot; &quot;$DATA&quot;
+</span></code></pre></div>
+<p><strong>What this does:</strong> Instead of all cache keys expiring at exactly 1 hour, they expire between 1 hour and 1 hour 5 minutes, spreading the load.</p>
+<hr />
+<h2 id="practical-exercises">Practical Exercises</h2>
+<h3 id="exercise-1-user-management-system">Exercise 1: User Management System</h3>
+<p>Design keys for a user management system:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a># User profile
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>HSET user:1001:profile name &quot;Alice Cooper&quot; email &quot;alice@example.com&quot;
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>HSET user:1001:profile created &quot;2024-01-15&quot; last_login &quot;2024-01-20&quot;
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a># User permissions
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>SADD user:1001:roles &quot;admin&quot; &quot;moderator&quot;
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>SADD user:1001:permissions &quot;read_users&quot; &quot;write_posts&quot; &quot;delete_comments&quot;
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a># User activity with expiration
+</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a>LPUSH user:1001:activity:2024-01-20 &quot;login&quot; &quot;view_dashboard&quot; &quot;edit_profile&quot;
+</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a>EXPIRE user:1001:activity:2024-01-20 2592000  # 30 days
+</span><span id="__span-35-12"><a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a>
+</span><span id="__span-35-13"><a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a># User session
+</span><span id="__span-35-14"><a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a>SETEX session:abc123def456 7200 &#39;{&quot;user_id&quot;:1001,&quot;ip&quot;:&quot;192.168.1.100&quot;}&#39;
+</span></code></pre></div>
+<h3 id="exercise-2-e-commerce-cache-system">Exercise 2: E-commerce Cache System</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a># Product cache with different TTLs
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>SETEX cache:product:123:details 3600 &#39;{&quot;name&quot;:&quot;Laptop&quot;,&quot;price&quot;:999}&#39;
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>SETEX cache:product:123:reviews 1800 &#39;[{&quot;rating&quot;:5,&quot;comment&quot;:&quot;Great!&quot;}]&#39;
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>SETEX cache:product:123:inventory 300 &#39;{&quot;stock&quot;:15,&quot;reserved&quot;:3}&#39;
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a># Category listings
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>SETEX cache:category:electronics:page:1 600 &#39;[&quot;product:123&quot;,&quot;product:456&quot;]&#39;
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>SETEX cache:search:laptop:page:1 900 &#39;{&quot;total&quot;:45,&quot;products&quot;:[...]}&#39;
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a># User-specific cache
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>SETEX cache:user:1001:recommendations 7200 &#39;[&quot;product:789&quot;,&quot;product:101&quot;]&#39;
+</span><span id="__span-36-12"><a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a>SETEX cache:user:1001:cart 3600 &#39;{&quot;items&quot;:3,&quot;total&quot;:125.99}&#39;
+</span></code></pre></div>
+<h3 id="exercise-3-real-time-application">Exercise 3: Real-time Application</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a># Online user tracking
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>SADD online:users &quot;user:1001&quot; &quot;user:1002&quot; &quot;user:1003&quot;
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>SETEX user:1001:last_seen 300 &quot;2024-01-20T15:30:00Z&quot;
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a># Real-time notifications
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>LPUSH notifications:user:1001 &#39;{&quot;type&quot;:&quot;message&quot;,&quot;from&quot;:&quot;user:1002&quot;}&#39;
+</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a>EXPIRE notifications:user:1001 86400  # 24 hours
+</span><span id="__span-37-8"><a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a>
+</span><span id="__span-37-9"><a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a># Live activity feed
+</span><span id="__span-37-10"><a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a>ZADD feed:global 1705751400 &quot;user:1001:posted:article:123&quot;
+</span><span id="__span-37-11"><a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a>ZADD feed:global 1705751450 &quot;user:1002:liked:article:123&quot;
+</span><span id="__span-37-12"><a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a>
+</span><span id="__span-37-13"><a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a># Rate limiting
+</span><span id="__span-37-14"><a id="__codelineno-37-14" name="__codelineno-37-14" href="#__codelineno-37-14"></a>SETEX rate:api:user:1001:minute 60 &quot;5&quot;    # 5 requests this minute
+</span><span id="__span-37-15"><a id="__codelineno-37-15" name="__codelineno-37-15" href="#__codelineno-37-15"></a>SETEX rate:api:user:1001:hour 3600 &quot;100&quot;  # 100 requests this hour
+</span></code></pre></div>
+<hr />
+<h2 id="key-analysis-and-debugging">Key Analysis and Debugging</h2>
+<h3 id="finding-memory-usage">Finding Memory Usage</h3>
+<p><strong>Why monitor memory:</strong> Understanding which keys consume the most memory helps optimize your Redis instance.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a># Total memory info - shows overall Redis memory statistics
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>127.0.0.1:6379&gt; INFO memory
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a># Returns detailed memory information
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>used_memory:1048576              # Memory used by Redis (1MB)
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>used_memory_human:1.00M          # Human readable format
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>used_memory_rss:2097152          # Memory from OS perspective
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>used_memory_peak:2097152         # Peak memory usage
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>maxmemory:0                      # Max memory limit (0 = unlimited)
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>...
+</span><span id="__span-38-10"><a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>
+</span><span id="__span-38-11"><a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a># Memory usage by key - shows exact bytes used by a specific key
+</span><span id="__span-38-12"><a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a>127.0.0.1:6379&gt; MEMORY USAGE user:1001:profile
+</span><span id="__span-38-13"><a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a>(integer) 96
+</span><span id="__span-38-14"><a id="__codelineno-38-14" name="__codelineno-38-14" href="#__codelineno-38-14"></a># This key uses 96 bytes of memory (includes overhead)
+</span><span id="__span-38-15"><a id="__codelineno-38-15" name="__codelineno-38-15" href="#__codelineno-38-15"></a>
+</span><span id="__span-38-16"><a id="__codelineno-38-16" name="__codelineno-38-16" href="#__codelineno-38-16"></a># Sample keys to analyze patterns - shows internal Redis object details
+</span><span id="__span-38-17"><a id="__codelineno-38-17" name="__codelineno-38-17" href="#__codelineno-38-17"></a>127.0.0.1:6379&gt; DEBUG OBJECT user:1001:profile
+</span><span id="__span-38-18"><a id="__codelineno-38-18" name="__codelineno-38-18" href="#__codelineno-38-18"></a>Value at:0x7f8b8c0a5c80 refcount:1 encoding:zipmap serializedlength:45
+</span><span id="__span-38-19"><a id="__codelineno-38-19" name="__codelineno-38-19" href="#__codelineno-38-19"></a># refcount: How many references point to this object
+</span><span id="__span-38-20"><a id="__codelineno-38-20" name="__codelineno-38-20" href="#__codelineno-38-20"></a># encoding: Internal data structure used (zipmap, hashtable, etc.)
+</span><span id="__span-38-21"><a id="__codelineno-38-21" name="__codelineno-38-21" href="#__codelineno-38-21"></a># serializedlength: Size when saved to disk
+</span></code></pre></div>
+<h3 id="key-distribution-analysis">Key Distribution Analysis</h3>
+<p><strong>Why analyze distribution:</strong> Understanding your key patterns helps identify naming issues and optimize storage.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="c1"># Analyze key patterns with redis-cli</span>
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="c1"># This command finds common key prefixes and counts them</span>
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>redis-cli<span class="w"> </span>--scan<span class="w"> </span>--pattern<span class="w"> </span><span class="s2">&quot;user:*&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1000<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>awk<span class="w"> </span>-F:<span class="w"> </span><span class="s1">&#39;{print $1&quot;:&quot;$2}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-nr
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>
+</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a><span class="c1"># Sample output:</span>
+</span><span id="__span-39-7"><a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a><span class="c1">#    450 user:1001</span>
+</span><span id="__span-39-8"><a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a><span class="c1">#    380 user:1002  </span>
+</span><span id="__span-39-9"><a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a><span class="c1">#    275 user:1003</span>
+</span><span id="__span-39-10"><a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a><span class="c1">#     89 user:cache</span>
+</span><span id="__span-39-11"><a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a><span class="c1">#     12 user:temp</span>
+</span></code></pre></div>
+<p><strong>Breaking down this complex command:</strong></p>
+<ol>
+<li><strong><code>redis-cli --scan --pattern "user:*"</code></strong> - Safely scan for all keys starting with "user:"</li>
+<li><strong><code>head -1000</code></strong> - Take only first 1000 results (prevent overwhelming output)</li>
+<li><strong><code>awk -F: '{print $1":"$2}'</code></strong> - Split by colon (:) and print first two parts</li>
+<li><code>user:1001:profile</code> becomes <code>user:1001</code></li>
+<li><code>user:1001:settings</code> becomes <code>user:1001</code></li>
+<li><strong><code>sort</code></strong> - Sort the patterns alphabetically</li>
+<li><strong><code>uniq -c</code></strong> - Count duplicate patterns</li>
+<li><strong><code>sort -nr</code></strong> - Sort by count (highest first)</li>
+</ol>
+<p><strong>What this tells you:</strong> User 1001 has 450 keys, user 1002 has 380 keys, etc. This helps identify users with too many keys.</p>
+<h3 id="finding-hot-keys">Finding Hot Keys</h3>
+<p><strong>Why find hot keys:</strong> Heavily accessed keys can become bottlenecks and impact performance.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a># Monitor frequently accessed keys - shows real-time command activity
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>127.0.0.1:6379&gt; MONITOR | grep -E &quot;(GET|SET|HGET)&quot;
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a># Sample output (live stream):
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>1704067200.123456 [0 127.0.0.1:54321] &quot;GET&quot; &quot;user:1001:profile&quot;
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>1704067200.234567 [0 127.0.0.1:54322] &quot;HGET&quot; &quot;user:1001:settings&quot; &quot;theme&quot;
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>1704067200.345678 [0 127.0.0.1:54323] &quot;SET&quot; &quot;cache:homepage&quot; &quot;&lt;html&gt;...&quot;
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>1704067200.456789 [0 127.0.0.1:54324] &quot;GET&quot; &quot;user:1001:profile&quot;
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>
+</span><span id="__span-40-9"><a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a># Use Redis slow log for analysis - tracks commands that take too long
+</span><span id="__span-40-10"><a id="__codelineno-40-10" name="__codelineno-40-10" href="#__codelineno-40-10"></a>127.0.0.1:6379&gt; CONFIG SET slowlog-log-slower-than 10000
+</span><span id="__span-40-11"><a id="__codelineno-40-11" name="__codelineno-40-11" href="#__codelineno-40-11"></a>OK
+</span><span id="__span-40-12"><a id="__codelineno-40-12" name="__codelineno-40-12" href="#__codelineno-40-12"></a>
+</span><span id="__span-40-13"><a id="__codelineno-40-13" name="__codelineno-40-13" href="#__codelineno-40-13"></a>127.0.0.1:6379&gt; SLOWLOG GET 10
+</span><span id="__span-40-14"><a id="__codelineno-40-14" name="__codelineno-40-14" href="#__codelineno-40-14"></a>1) 1) (integer) 2          # Slow log entry ID
+</span><span id="__span-40-15"><a id="__codelineno-40-15" name="__codelineno-40-15" href="#__codelineno-40-15"></a>   2) (integer) 1704067200 # Unix timestamp when command was executed
+</span><span id="__span-40-16"><a id="__codelineno-40-16" name="__codelineno-40-16" href="#__codelineno-40-16"></a>   3) (integer) 15000      # Execution time in microseconds (15ms)
+</span><span id="__span-40-17"><a id="__codelineno-40-17" name="__codelineno-40-17" href="#__codelineno-40-17"></a>   4) 1) &quot;KEYS&quot;            # The slow command
+</span><span id="__span-40-18"><a id="__codelineno-40-18" name="__codelineno-40-18" href="#__codelineno-40-18"></a>      2) &quot;user:*&quot;          # Command arguments
+</span><span id="__span-40-19"><a id="__codelineno-40-19" name="__codelineno-40-19" href="#__codelineno-40-19"></a>   5) &quot;127.0.0.1:54321&quot;    # Client IP and port
+</span><span id="__span-40-20"><a id="__codelineno-40-20" name="__codelineno-40-20" href="#__codelineno-40-20"></a>
+</span><span id="__span-40-21"><a id="__codelineno-40-21" name="__codelineno-40-21" href="#__codelineno-40-21"></a>2) 1) (integer) 1
+</span><span id="__span-40-22"><a id="__codelineno-40-22" name="__codelineno-40-22" href="#__codelineno-40-22"></a>   2) (integer) 1704067190
+</span><span id="__span-40-23"><a id="__codelineno-40-23" name="__codelineno-40-23" href="#__codelineno-40-23"></a>   3) (integer) 12000      # 12ms execution time
+</span><span id="__span-40-24"><a id="__codelineno-40-24" name="__codelineno-40-24" href="#__codelineno-40-24"></a>   4) 1) &quot;HGETALL&quot;
+</span><span id="__span-40-25"><a id="__codelineno-40-25" name="__codelineno-40-25" href="#__codelineno-40-25"></a>      2) &quot;large_hash_key&quot;
+</span><span id="__span-40-26"><a id="__codelineno-40-26" name="__codelineno-40-26" href="#__codelineno-40-26"></a>   5) &quot;127.0.0.1:54322&quot;
+</span></code></pre></div>
+<p><strong>SLOWLOG detailed explanation:</strong></p>
+<ul>
+<li><strong>Entry ID (2):</strong> Unique identifier for this slow log entry</li>
+<li><strong>Timestamp (1704067200):</strong> When the slow command was executed (Unix timestamp)</li>
+<li><strong>Execution time (15000):</strong> How long the command took in <strong>microseconds</strong> (15,000 μs = 15ms)</li>
+<li><strong>Command and args:</strong> The actual slow command that was executed</li>
+<li><strong>Client info:</strong> Which client IP and port sent the command</li>
+</ul>
+<p><strong>Understanding the timing:</strong></p>
+<ul>
+<li>10,000 microseconds = 10 milliseconds</li>
+<li>Commands taking longer than this threshold are logged</li>
+<li>Typical fast commands take &lt; 1ms</li>
+<li>Commands taking &gt; 10ms might need optimization</li>
+</ul>
+<p><strong>Common slow operations you'll see:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a># These operations commonly appear in SLOWLOG:
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>&quot;KEYS&quot; &quot;*&quot;              # Scanning all keys (avoid in production)
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>&quot;HGETALL&quot; &quot;huge_hash&quot;   # Getting large hash with many fields  
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>&quot;LRANGE&quot; &quot;long_list&quot; &quot;0&quot; &quot;-1&quot;  # Getting entire long list
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>&quot;SMEMBERS&quot; &quot;large_set&quot;  # Getting all members of large set
+</span></code></pre></div></p>
+<p><strong>How to use this information:</strong></p>
+<ol>
+<li><strong>High frequency in MONITOR</strong> = Hot key (accessed often)</li>
+<li><strong>Appears in SLOWLOG</strong> = Slow operation (takes too long)</li>
+<li><strong>Both</strong> = Hot key with slow operations (biggest problem!)</li>
+</ol>
+<p><strong>Practical monitoring script:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="c1"># Count most accessed keys in real-time</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>redis-cli<span class="w"> </span>monitor<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;(GET|SET|HGET)&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>awk<span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>-c<span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-nr<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-10
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a><span class="c1"># This will show the top 10 most accessed keys</span>
+</span></code></pre></div></p>
+<hr />
+<h2 id="common-pitfalls-and-solutions">Common Pitfalls and Solutions</h2>
+<h3 id="1-key-naming-inconsistencies">1. Key Naming Inconsistencies</h3>
+<p><strong>Why this is a problem:</strong> Mixed naming makes it hard to find keys and write maintainable code.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a># Problem: Inconsistent naming
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>user:1001           # Some keys use colons
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>user_1002           # Others use underscores  
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>User-1003           # Mixed case and hyphens
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a># Solution: Establish and follow conventions
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>user:1001:profile
+</span><span id="__span-43-8"><a id="__codelineno-43-8" name="__codelineno-43-8" href="#__codelineno-43-8"></a>user:1002:profile  
+</span><span id="__span-43-9"><a id="__codelineno-43-9" name="__codelineno-43-9" href="#__codelineno-43-9"></a>user:1003:profile
+</span></code></pre></div>
+<h3 id="2-key-explosion">2. Key Explosion</h3>
+<p><strong>Why this is a problem:</strong> Too many similar keys waste memory and make Redis slower.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a># Problem: Too many similar keys
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>user:1001:last_activity:2024-01-15:14:30:00
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>user:1001:last_activity:2024-01-15:14:31:00
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>user:1001:last_activity:2024-01-15:14:32:00
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a># Solution: Aggregate or use different data structures
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>user:1001:last_activity  # Single timestamp
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a># Or use a list/sorted set for multiple activities
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>LPUSH user:1001:activities &quot;2024-01-15:14:30:00&quot;
+</span></code></pre></div>
+<h3 id="3-missing-expiration">3. Missing Expiration</h3>
+<p><strong>Why this is a problem:</strong> Cache keys without TTL grow forever and fill up memory.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a># Problem: Cache keys without TTL
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>SET cache:user:profile &quot;data&quot;  # Never expires!
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a># Solution: Always set appropriate TTL
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>SETEX cache:user:profile 3600 &quot;data&quot;  # 1 hour expiration
+</span></code></pre></div>
+<h3 id="4-inefficient-key-patterns">4. Inefficient Key Patterns</h3>
+<p><strong>Why this is a problem:</strong> Long keys use more memory and reduce Redis performance.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a># Problem: Keys that don&#39;t compress well
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>SET user_profile_information_for_id_1001 &quot;data&quot;
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>SET user_profile_information_for_id_1002 &quot;data&quot;
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a># Solution: Shorter, consistent patterns
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>SET user:1001:profile &quot;data&quot;
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>SET user:1002:profile &quot;data&quot;
+</span></code></pre></div>
+<hr />
+<h2 id="key-management-checklist">Key Management Checklist</h2>
+<p>Before deploying to production, ensure:</p>
+<ul>
+<li><strong>Consistent naming convention</strong> across all keys</li>
+<li><strong>Appropriate expiration</strong> for cache and temporary data</li>
+<li><strong>Reasonable key length</strong> (not too long, not too cryptic)</li>
+<li><strong>Namespace separation</strong> between different features</li>
+<li><strong>No sensitive data</strong> in key names</li>
+<li><strong>Documented key patterns</strong> for team reference</li>
+<li><strong>Key cleanup strategy</strong> for old/unused keys</li>
+<li><strong>Monitoring setup</strong> for key metrics</li>
+</ul>
+<hr />
+<h2 id="whats-next">What's Next?</h2>
+<p>Now that you understand keys and values, let's dive into:</p>
+<ul>
+<li>How Redis manages memory</li>
+<li>Persistence options (RDB vs AOF)</li>
+<li>Memory optimization techniques</li>
+<li>Redis configuration essentials</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../redis_data_types/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Redis Datatypes">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Redis Datatypes
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../redis_memory_persistence/" class="md-footer__link md-footer__link--next" aria-label="Next: Memory Persistence">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Memory Persistence
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 - 2028 Mitarpal Grover
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://linkedin.com/in/mitarpalgrover" target="_blank" rel="noopener" title="linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://youtube.com" target="_blank" rel="noopener" title="youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.instant.progress", "search.suggest", "search.highlight", "search.share", "navigation.footer", "navigation.top", "content.tabs.link", "content.code.copy", "toc.follow", "content.code.select", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3398 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to Redis for freshers and beginners">
+      
+      
+        <meta name="author" content="Mitarpal Grover">
+      
+      
+        <link rel="canonical" href="https://mydomain.org/mysite/fundamentals/redis_memory_persistence/">
+      
+      
+        <link rel="prev" href="../redis_keys_values/">
+      
+      
+        <link rel="next" href="../redis_configuration_basics/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+    
+    
+      
+        <title>Memory Persistence - Guide to Redis</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Poppins";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#memory-and-persistence" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Guide to Redis" class="md-header__button md-logo" aria-label="Guide to Redis" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Guide to Redis
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Memory Persistence
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MITARPALGROVER/redis-documentation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MITARPALGROVER/redis
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Guide to Redis" class="md-nav__button md-logo" aria-label="Guide to Redis" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    Guide to Redis
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MITARPALGROVER/redis-documentation.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MITARPALGROVER/redis
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Welcome to Redis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/what_is_redis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    What is Redis?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/redis_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/redis_first_steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    First Step
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/redis_cli_basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Redis CLI Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Fundamentals
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Fundamentals
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../redis_data_types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Redis Datatypes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../redis_keys_values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Keys And Values
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Memory Persistence
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Memory Persistence
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-redis-uses-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Redis Uses Memory
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Redis Uses Memory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-vs-disk-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory vs Disk Storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-memory-makes-redis-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Memory Makes Redis Fast
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redis-memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Redis Memory Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Redis Memory Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Allocation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking Memory Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-memory-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Memory Metrics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Policies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory Policies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-memory-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available Memory Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eviction-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eviction Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-policy-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Policy Examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redis-persistence-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Redis Persistence Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Redis Persistence Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-rdb-redis-database-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. RDB (Redis Database Backup)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. RDB (Redis Database Backup)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rdb-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDB Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rdb-pros-and-cons" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDB Pros and Cons
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-aof-append-only-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. AOF (Append Only File)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. AOF (Append Only File)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aof-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      AOF Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aof-pros-and-cons" class="md-nav__link">
+    <span class="md-ellipsis">
+      AOF Pros and Cons
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistence-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistence Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Persistence Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#strategy-1-rdb-only-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strategy 1: RDB Only (Snapshots)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strategy-2-aof-only-maximum-durability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strategy 2: AOF Only (Maximum Durability)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strategy-3-both-rdb-and-aof-hybrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strategy 3: Both RDB and AOF (Hybrid)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strategy-4-no-persistence-cache-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strategy 4: No Persistence (Cache Only)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-optimization-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Optimization Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory Optimization Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-choose-efficient-data-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Choose Efficient Data Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-appropriate-value-sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Use Appropriate Value Sizes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-enable-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Enable Compression
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-set-appropriate-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Set Appropriate TTL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-monitor-key-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Monitor Key Distribution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-memory-and-persistence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring Memory and Persistence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring Memory and Persistence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-monitoring-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Monitoring Commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistence-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistence Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Alerts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-memory-issues-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Memory Issues and Solutions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Memory Issues and Solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-1-memory-fragmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue 1: Memory Fragmentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-2-memory-leaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue 2: Memory Leaks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-3-persistence-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue 3: Persistence Failures
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Exercises
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Exercises">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-memory-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: Memory Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-persistence-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: Persistence Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-memory-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Memory Optimization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-and-persistence-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory and Persistence Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's Next?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../redis_configuration_basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core Concepts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Core Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/commands-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Commands Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/string-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    String Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/list-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    List Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/set-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Set Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/hash-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hash Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/sorted-set-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sorted Set Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core-concepts/expiration-and-ttl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Expiration and TTL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Practical Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Practical Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/caching-basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Caching Basics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/session-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Session Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/rate-limiting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rate Limiting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/leaderboards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Leaderboards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../practical-examples/real-time-features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Real-Time Features
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/pub-sub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pub/Sub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/transactions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transactions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/lua-scripting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lua Scripting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/clustering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Clustering
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/replication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Replication
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-topics/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Security
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Troubleshooting
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/common-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Common Errors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/performance-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Performance Tuning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/debugging-tips/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Debugging Tips
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/useful-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Useful Tools
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Glossary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/cheat-sheet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cheat Sheet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/official-docs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Official Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-redis-uses-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Redis Uses Memory
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Redis Uses Memory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-vs-disk-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory vs Disk Storage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-memory-makes-redis-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Memory Makes Redis Fast
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redis-memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Redis Memory Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Redis Memory Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Allocation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checking-memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking Memory Usage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-memory-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Memory Metrics
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Policies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory Policies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#available-memory-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Available Memory Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eviction-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Eviction Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-policy-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Policy Examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redis-persistence-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Redis Persistence Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Redis Persistence Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-rdb-redis-database-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. RDB (Redis Database Backup)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. RDB (Redis Database Backup)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rdb-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDB Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rdb-pros-and-cons" class="md-nav__link">
+    <span class="md-ellipsis">
+      RDB Pros and Cons
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-aof-append-only-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. AOF (Append Only File)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. AOF (Append Only File)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aof-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      AOF Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aof-pros-and-cons" class="md-nav__link">
+    <span class="md-ellipsis">
+      AOF Pros and Cons
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#persistence-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistence Strategies
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Persistence Strategies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#strategy-1-rdb-only-snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strategy 1: RDB Only (Snapshots)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strategy-2-aof-only-maximum-durability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strategy 2: AOF Only (Maximum Durability)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strategy-3-both-rdb-and-aof-hybrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strategy 3: Both RDB and AOF (Hybrid)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strategy-4-no-persistence-cache-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      Strategy 4: No Persistence (Cache Only)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-optimization-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Optimization Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Memory Optimization Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-choose-efficient-data-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Choose Efficient Data Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-use-appropriate-value-sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Use Appropriate Value Sizes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-enable-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Enable Compression
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-set-appropriate-ttl" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Set Appropriate TTL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-monitor-key-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Monitor Key Distribution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monitoring-memory-and-persistence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring Memory and Persistence
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Monitoring Memory and Persistence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#memory-monitoring-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Monitoring Commands
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persistence-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Persistence Monitoring
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-alerts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Alerts
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-memory-issues-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Memory Issues and Solutions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Memory Issues and Solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-1-memory-fragmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue 1: Memory Fragmentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-2-memory-leaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue 2: Memory Leaks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-3-persistence-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue 3: Persistence Failures
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Exercises
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Exercises">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-memory-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 1: Memory Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-persistence-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 2: Persistence Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-memory-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exercise 3: Memory Optimization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-and-persistence-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory and Persistence Checklist
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's Next?
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="memory-and-persistence">Memory and Persistence</h1>
+<p>Understanding how Redis manages memory and persists data is crucial for building reliable applications. Let's explore Redis's memory model and persistence options!</p>
+<h2 id="how-redis-uses-memory">How Redis Uses Memory</h2>
+<p>Redis is an <strong>in-memory database</strong>, which means all your data is stored in RAM for lightning-fast access. But what does this really mean?</p>
+<h3 id="memory-vs-disk-storage">Memory vs Disk Storage</h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Traditional Database</th>
+<th>Redis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data Location</strong></td>
+<td>Hard disk/SSD</td>
+<td>RAM (memory)</td>
+</tr>
+<tr>
+<td><strong>Access Speed</strong></td>
+<td>Milliseconds</td>
+<td>Microseconds</td>
+</tr>
+<tr>
+<td><strong>Data Survival</strong></td>
+<td>Survives restarts</td>
+<td>Requires persistence setup</td>
+</tr>
+<tr>
+<td><strong>Storage Cost</strong></td>
+<td>Cheap</td>
+<td>More expensive</td>
+</tr>
+<tr>
+<td><strong>Capacity</strong></td>
+<td>Very large (TBs)</td>
+<td>Limited by RAM (GBs)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="why-memory-makes-redis-fast">Why Memory Makes Redis Fast</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># Traditional database query: ~10-100ms
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>SELECT * FROM users WHERE id = 1001;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a># Redis equivalent: ~0.1ms
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>127.0.0.1:6379&gt; GET user:1001
+</span></code></pre></div>
+<p>The speed difference comes from:</p>
+<ul>
+<li><strong>No disk I/O</strong> - data is already in memory</li>
+<li><strong>Simple data structures</strong> - optimized for speed</li>
+<li><strong>No query parsing</strong> - direct key-value access</li>
+</ul>
+<hr />
+<h2 id="redis-memory-management">Redis Memory Management</h2>
+<h3 id="memory-allocation">Memory Allocation</h3>
+<p>When you store data in Redis:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># Each operation allocates memory
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>127.0.0.1:6379&gt; SET user:1001 &quot;John Doe&quot;           # ~64 bytes
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>127.0.0.1:6379&gt; HSET profile:1001 name &quot;John&quot;      # ~96 bytes  
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>127.0.0.1:6379&gt; LPUSH queue:tasks &quot;task1&quot;          # ~80 bytes
+</span></code></pre></div>
+<p>Redis allocates memory for:</p>
+<ul>
+<li><strong>Keys</strong> (the identifiers)</li>
+<li><strong>Values</strong> (the actual data)</li>
+<li><strong>Data structure overhead</strong> (pointers, metadata)</li>
+<li><strong>Expiration information</strong> (if TTL is set)</li>
+</ul>
+<h3 id="checking-memory-usage">Checking Memory Usage</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a># Overall memory statistics
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>127.0.0.1:6379&gt; INFO memory
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a># Memory
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>used_memory:1048576
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>used_memory_human:1.00M
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>used_memory_rss:2097152
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>used_memory_peak:1200000
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>used_memory_peak_human:1.14M
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a># Memory usage of specific key
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>127.0.0.1:6379&gt; MEMORY USAGE user:1001
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>(integer) 64
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a># Memory usage with detailed breakdown
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>127.0.0.1:6379&gt; MEMORY USAGE user:1001 SAMPLES 5
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>(integer) 64
+</span></code></pre></div>
+<h3 id="key-memory-metrics">Key Memory Metrics</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Description</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>used_memory</code></td>
+<td>Memory used by Redis</td>
+<td>Your actual data size</td>
+</tr>
+<tr>
+<td><code>used_memory_rss</code></td>
+<td>Memory used by OS</td>
+<td>Includes fragmentation</td>
+</tr>
+<tr>
+<td><code>used_memory_peak</code></td>
+<td>Highest memory usage</td>
+<td>Plan for peak loads</td>
+</tr>
+<tr>
+<td><code>mem_fragmentation_ratio</code></td>
+<td>Fragmentation level</td>
+<td>Memory efficiency</td>
+</tr>
+</tbody>
+</table>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a># Calculate fragmentation ratio
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>127.0.0.1:6379&gt; INFO memory | grep fragmentation
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>mem_fragmentation_ratio:1.25
+</span></code></pre></div>
+<p><strong>Fragmentation ratios:</strong></p>
+<ul>
+<li><strong>&lt; 1.0</strong>: Memory swapping (bad)</li>
+<li><strong>1.0-1.5</strong>: Normal range (good)</li>
+<li><strong>&gt; 1.5</strong>: High fragmentation (consider optimization)</li>
+</ul>
+<hr />
+<h2 id="memory-policies">Memory Policies</h2>
+<p>What happens when Redis runs out of memory? You can configure different policies:</p>
+<h3 id="available-memory-policies">Available Memory Policies</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a># Check current policy
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>127.0.0.1:6379&gt; CONFIG GET maxmemory-policy
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>1) &quot;maxmemory-policy&quot;
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>2) &quot;noeviction&quot;
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a># Set memory limit (128MB)
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>127.0.0.1:6379&gt; CONFIG SET maxmemory 134217728
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a># Set eviction policy
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>127.0.0.1:6379&gt; CONFIG SET maxmemory-policy allkeys-lru
+</span></code></pre></div>
+<h3 id="eviction-policies">Eviction Policies</h3>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>noeviction</strong></td>
+<td>Return errors when memory limit reached</td>
+<td>Databases where all data is critical</td>
+</tr>
+<tr>
+<td><strong>allkeys-lru</strong></td>
+<td>Remove least recently used keys</td>
+<td>General caching</td>
+</tr>
+<tr>
+<td><strong>allkeys-lfu</strong></td>
+<td>Remove least frequently used keys</td>
+<td>Caches with clear usage patterns</td>
+</tr>
+<tr>
+<td><strong>volatile-lru</strong></td>
+<td>Remove LRU keys with TTL set</td>
+<td>Mixed workloads</td>
+</tr>
+<tr>
+<td><strong>volatile-lfu</strong></td>
+<td>Remove LFU keys with TTL set</td>
+<td>Cache with some permanent data</td>
+</tr>
+<tr>
+<td><strong>allkeys-random</strong></td>
+<td>Remove random keys</td>
+<td>When access patterns are unpredictable</td>
+</tr>
+<tr>
+<td><strong>volatile-random</strong></td>
+<td>Remove random keys with TTL</td>
+<td>Simple cache cleanup</td>
+</tr>
+<tr>
+<td><strong>volatile-ttl</strong></td>
+<td>Remove keys with shortest TTL</td>
+<td>Time-sensitive cache data</td>
+</tr>
+</tbody>
+</table>
+<h3 id="practical-policy-examples">Practical Policy Examples</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a># Cache server - evict any key when memory full
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>CONFIG SET maxmemory-policy allkeys-lru
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>CONFIG SET maxmemory 2gb
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a># Session store - only evict temporary data
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>CONFIG SET maxmemory-policy volatile-lru
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>CONFIG SET maxmemory 1gb
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a># Database - never lose data automatically
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>CONFIG SET maxmemory-policy noeviction
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>CONFIG SET maxmemory 8gb
+</span></code></pre></div>
+<hr />
+<h2 id="redis-persistence-options">Redis Persistence Options</h2>
+<p>Redis offers two main persistence methods to survive server restarts:</p>
+<h3 id="1-rdb-redis-database-backup">1. RDB (Redis Database Backup)</h3>
+<p><strong>What is RDB?</strong> Think of RDB like taking a photo of all your data at one moment in time. It creates a single file that contains everything.</p>
+<p><strong>RDB</strong> creates <strong>point-in-time snapshots</strong> of your data.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># Manual snapshot - tell Redis to take a photo of all data right now
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>127.0.0.1:6379&gt; BGSAVE
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Background saving started
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a># Check when we last took a photo
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>127.0.0.1:6379&gt; LASTSAVE
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>(integer) 1705751400
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a># This number is Unix timestamp = Mon Jan 20 2025 15:30:00 GMT
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a># Force synchronous save (blocks Redis - be careful!)
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>127.0.0.1:6379&gt; SAVE
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>OK
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a># Warning: This freezes Redis until save is complete
+</span></code></pre></div>
+<p><strong>Understanding BGSAVE vs SAVE:</strong></p>
+<ul>
+<li><strong>BGSAVE</strong> = Background save (Redis keeps working while saving)</li>
+<li><strong>SAVE</strong> = Foreground save (Redis stops accepting commands until done)</li>
+</ul>
+<h4 id="rdb-configuration">RDB Configuration</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a># Save snapshot if at least 1 key changed in 900 seconds (15 minutes)
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>127.0.0.1:6379&gt; CONFIG SET save &quot;900 1&quot;
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>OK
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a># Multiple save conditions (Redis checks ALL of these)
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>127.0.0.1:6379&gt; CONFIG SET save &quot;900 1 300 10 60 10000&quot;
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>OK
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a># Save if: 1 change in 15 minutes OR 10 changes in 5 minutes OR 10000 changes in 1 minute
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a># Check current save settings
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>127.0.0.1:6379&gt; CONFIG GET save
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>1) &quot;save&quot;
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>2) &quot;900 1 300 10 60 10000&quot;
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a># Disable RDB completely
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>127.0.0.1:6379&gt; CONFIG SET save &quot;&quot;
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>OK
+</span></code></pre></div>
+<p><strong>What these numbers mean:</strong></p>
+<ul>
+<li><code>900 1</code> = If 1 key changes, save after 900 seconds (15 minutes)</li>
+<li><code>300 10</code> = If 10 keys change, save after 300 seconds (5 minutes)  </li>
+<li><code>60 10000</code> = If 10,000 keys change, save after 60 seconds (1 minute)</li>
+</ul>
+<h4 id="rdb-pros-and-cons">RDB Pros and Cons</h4>
+<table>
+<thead>
+<tr>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Compact</strong> single file (easy to backup)</td>
+<td><strong>Data loss</strong> between snapshots (could lose 15 min of data)</td>
+</tr>
+<tr>
+<td><strong>Fast recovery</strong> on restart (just load one file)</td>
+<td><strong>CPU intensive</strong> during saves (temporary slowdown)</td>
+</tr>
+<tr>
+<td><strong>Good for backups</strong> (copy one file)</td>
+<td><strong>Fork can fail</strong> on low memory (needs 2x memory briefly)</td>
+</tr>
+<tr>
+<td><strong>Minimal performance impact</strong> (saves in background)</td>
+<td><strong>Not real-time</strong> persistence (gap between saves)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-aof-append-only-file">2. AOF (Append Only File)</h3>
+<p><strong>What is AOF?</strong> Think of AOF like keeping a diary. Every time you do something (write data), Redis writes it down in a log file. If Redis crashes, it can replay the diary to get back all your data.</p>
+<p><strong>AOF</strong> logs <strong>every write command</strong> for complete durability.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># Enable AOF (start keeping the diary)
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>127.0.0.1:6379&gt; CONFIG SET appendonly yes
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>OK
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a># Check if AOF is enabled
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>127.0.0.1:6379&gt; CONFIG GET appendonly
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>1) &quot;appendonly&quot;
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>2) &quot;yes&quot;
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a># AOF sync policies (how often to write diary to disk)
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>127.0.0.1:6379&gt; CONFIG SET appendfsync always    # Write every command (slowest, safest)
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>127.0.0.1:6379&gt; CONFIG SET appendfsync everysec  # Write every second (balanced)
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>127.0.0.1:6379&gt; CONFIG SET appendfsync no        # Let OS decide when to write (fastest, risky)
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a># Manual AOF rewrite (clean up and compress the diary)
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>127.0.0.1:6379&gt; BGREWRITEAOF
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>Background append only file rewriting started
+</span></code></pre></div>
+<p><strong>Understanding AOF sync options:</strong></p>
+<ul>
+<li><strong>always</strong> = Every command written to disk immediately (very safe, but slower)</li>
+<li><strong>everysec</strong> = Write to disk once per second (good balance - at most 1 second of data loss)</li>
+<li><strong>no</strong> = Operating system decides when to write (faster but could lose more data if crash)</li>
+</ul>
+<h4 id="aof-configuration">AOF Configuration</h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a># Auto-rewrite AOF when it grows 100% bigger and is at least 64MB
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>127.0.0.1:6379&gt; CONFIG SET auto-aof-rewrite-percentage 100
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>OK
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>127.0.0.1:6379&gt; CONFIG SET auto-aof-rewrite-min-size 67108864
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>OK
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a># Check AOF status and get detailed information
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>127.0.0.1:6379&gt; INFO persistence
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a># Persistence
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>loading:0
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>rdb_changes_since_last_save:0
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>rdb_bgsave_in_progress:0
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>rdb_last_save_time:1705751400
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>rdb_last_bgsave_status:ok
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>rdb_last_bgsave_time_sec:0
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>rdb_current_bgsave_time_sec:-1
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>aof_enabled:1
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>aof_rewrite_in_progress:0
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>aof_rewrite_scheduled:0
+</span><span id="__span-9-20"><a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>aof_last_rewrite_time_sec:-1
+</span><span id="__span-9-21"><a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>aof_current_rewrite_time_sec:-1
+</span><span id="__span-9-22"><a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>aof_last_bgrewrite_status:ok
+</span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>aof_last_write_status:ok
+</span><span id="__span-9-24"><a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>aof_current_size:1024
+</span><span id="__span-9-25"><a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a>aof_base_size:1024
+</span></code></pre></div>
+<p><strong>What auto-rewrite means:</strong>
+AOF files can get very large because they record every command. Rewriting compresses the file by replacing multiple commands with the final result. Example:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Original AOF: SET counter 1, INCR counter, INCR counter, INCR counter
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>After rewrite: SET counter 4
+</span></code></pre></div></p>
+<h4 id="aof-pros-and-cons">AOF Pros and Cons</h4>
+<table>
+<thead>
+<tr>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Minimal data loss</strong> (at most 1 second with everysec)</td>
+<td><strong>Larger files</strong> than RDB (stores every command)</td>
+</tr>
+<tr>
+<td><strong>Readable format</strong> (actual Redis commands you can read)</td>
+<td><strong>Slower recovery</strong> time (must replay all commands)</td>
+</tr>
+<tr>
+<td><strong>Incremental backups</strong> possible (append-only file)</td>
+<td><strong>More disk I/O</strong> (constantly writing to file)</td>
+</tr>
+<tr>
+<td><strong>Corruption resilient</strong> (can fix partial corruption)</td>
+<td><strong>Can grow very large</strong> without rewriting</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="persistence-strategies">Persistence Strategies</h2>
+<h3 id="strategy-1-rdb-only-snapshots">Strategy 1: RDB Only (Snapshots)</h3>
+<p><strong>Use when:</strong> You can afford to lose recent data, need fast restarts</p>
+<p><strong>Simple explanation:</strong> Like taking photos of your data every few minutes. If Redis crashes, you lose data since the last photo.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a># Configure RDB snapshots
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>127.0.0.1:6379&gt; CONFIG SET save &quot;900 1 300 10 60 10000&quot;
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>OK
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>127.0.0.1:6379&gt; CONFIG SET appendonly no
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>OK
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>127.0.0.1:6379&gt; CONFIG SET dbfilename &quot;dump.rdb&quot;
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>OK
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>127.0.0.1:6379&gt; CONFIG SET dir &quot;/var/lib/redis&quot;
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>OK
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a># Verify settings
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>127.0.0.1:6379&gt; CONFIG GET save
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>1) &quot;save&quot;
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>2) &quot;900 1 300 10 60 10000&quot;
+</span></code></pre></div>
+<p><strong>Example scenario:</strong> Web page cache, where losing 15 minutes of cache data is acceptable because you can regenerate it.</p>
+<h3 id="strategy-2-aof-only-maximum-durability">Strategy 2: AOF Only (Maximum Durability)</h3>
+<p><strong>Use when:</strong> You can't afford to lose any data</p>
+<p><strong>Simple explanation:</strong> Like keeping a detailed diary of everything you do. Takes more space and time, but you won't lose anything important.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a># Configure AOF
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>127.0.0.1:6379&gt; CONFIG SET appendonly yes
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>OK
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>127.0.0.1:6379&gt; CONFIG SET appendfsync everysec
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>OK
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>127.0.0.1:6379&gt; CONFIG SET save &quot;&quot;  # Disable RDB
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>OK
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a># Verify AOF is working
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>127.0.0.1:6379&gt; INFO persistence | grep aof_enabled
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>aof_enabled:1
+</span></code></pre></div>
+<p><strong>Example scenario:</strong> User session storage, financial transactions where losing data means losing money or angry users.</p>
+<h3 id="strategy-3-both-rdb-and-aof-hybrid">Strategy 3: Both RDB and AOF (Hybrid)</h3>
+<p><strong>Use when:</strong> You want durability AND fast recovery</p>
+<p><strong>Simple explanation:</strong> Take photos AND keep a diary. Best of both worlds but uses more disk space.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a># Enable both persistence methods
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>127.0.0.1:6379&gt; CONFIG SET appendonly yes
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>OK
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>127.0.0.1:6379&gt; CONFIG SET appendfsync everysec
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>OK
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>127.0.0.1:6379&gt; CONFIG SET save &quot;900 1 300 10 60 10000&quot;
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>OK
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a># RDB-AOF hybrid mode (Redis 4.0+) - makes recovery faster
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>127.0.0.1:6379&gt; CONFIG SET aof-use-rdb-preamble yes
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>OK
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a># Check both are enabled
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>127.0.0.1:6379&gt; INFO persistence | grep -E &quot;(rdb_last_save_time|aof_enabled)&quot;
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>rdb_last_save_time:1705751400
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>aof_enabled:1
+</span></code></pre></div>
+<p><strong>What hybrid mode does:</strong> When Redis restarts, it loads the RDB snapshot first (fast), then replays any AOF commands since the snapshot (complete recovery).</p>
+<p><strong>Example scenario:</strong> Production database where uptime and data safety are both critical - can't afford downtime OR data loss.</p>
+<h3 id="strategy-4-no-persistence-cache-only">Strategy 4: No Persistence (Cache Only)</h3>
+<p><strong>Use when:</strong> All data can be regenerated</p>
+<p><strong>Simple explanation:</strong> Don't save anything to disk. Fastest performance but all data disappears when Redis restarts.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a># Disable all persistence
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>127.0.0.1:6379&gt; CONFIG SET save &quot;&quot;
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>OK
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>127.0.0.1:6379&gt; CONFIG SET appendonly no
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>OK
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a># Verify persistence is disabled
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>127.0.0.1:6379&gt; CONFIG GET save
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>1) &quot;save&quot;
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>2) &quot;&quot;
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>127.0.0.1:6379&gt; CONFIG GET appendonly
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>1) &quot;appendonly&quot;
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>2) &quot;no&quot;
+</span></code></pre></div>
+<p><strong>Example scenario:</strong> Temporary cache, computed results that can be recalculated, or session data where users can just log in again.</p>
+<hr />
+<h2 id="memory-optimization-techniques">Memory Optimization Techniques</h2>
+<h3 id="1-choose-efficient-data-types">1. Choose Efficient Data Types</h3>
+<p><strong>Why this matters:</strong> Different data types use different amounts of memory. Choosing the right one can save a lot of space.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a># Less efficient: Multiple string keys (uses more memory)
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>127.0.0.1:6379&gt; SET user:1001:name &quot;John&quot;
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>OK
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>127.0.0.1:6379&gt; SET user:1001:email &quot;john@example.com&quot;
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>OK
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>127.0.0.1:6379&gt; SET user:1001:age &quot;30&quot;
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>OK
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a># Check memory usage of each key
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>127.0.0.1:6379&gt; MEMORY USAGE user:1001:name
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>(integer) 64
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>127.0.0.1:6379&gt; MEMORY USAGE user:1001:email
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>(integer) 80
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>127.0.0.1:6379&gt; MEMORY USAGE user:1001:age
+</span><span id="__span-15-15"><a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>(integer) 56
+</span><span id="__span-15-16"><a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a># Total: 64 + 80 + 56 = 200 bytes
+</span><span id="__span-15-17"><a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>
+</span><span id="__span-15-18"><a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a># More efficient: Single hash (uses less memory)
+</span><span id="__span-15-19"><a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>127.0.0.1:6379&gt; DEL user:1001:name user:1001:email user:1001:age
+</span><span id="__span-15-20"><a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>(integer) 3
+</span><span id="__span-15-21"><a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>127.0.0.1:6379&gt; HSET user:1001 name &quot;John&quot; email &quot;john@example.com&quot; age &quot;30&quot;
+</span><span id="__span-15-22"><a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>(integer) 3
+</span><span id="__span-15-23"><a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>
+</span><span id="__span-15-24"><a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a># Check memory usage of hash
+</span><span id="__span-15-25"><a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>127.0.0.1:6379&gt; MEMORY USAGE user:1001
+</span><span id="__span-15-26"><a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>(integer) 144
+</span><span id="__span-15-27"><a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a># Total: 144 bytes (saved 56 bytes = 28% less memory!)
+</span></code></pre></div>
+<p><strong>Why hashes are more efficient:</strong> Redis has special optimizations for small hashes that pack data more tightly.</p>
+<h3 id="2-use-appropriate-value-sizes">2. Use Appropriate Value Sizes</h3>
+<p><strong>Understanding memory overhead:</strong> Every key and value has some "overhead" - extra bytes Redis needs for bookkeeping.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a># Let&#39;s see how memory usage changes with value size
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>127.0.0.1:6379&gt; SET small_string &quot;hi&quot;
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>OK
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>127.0.0.1:6379&gt; MEMORY USAGE small_string
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>(integer) 56
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a># 2 characters + 54 bytes overhead
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>127.0.0.1:6379&gt; SET medium_string &quot;This is a medium length string with some content&quot;
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>OK
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>127.0.0.1:6379&gt; MEMORY USAGE medium_string
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>(integer) 104
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a># 49 characters + 55 bytes overhead
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>127.0.0.1:6379&gt; SET large_string &quot;This is a very long string that contains a lot of text and demonstrates how memory usage scales with content size. The overhead becomes less significant as the content grows larger.&quot;
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>OK
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>127.0.0.1:6379&gt; MEMORY USAGE large_string
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>(integer) 240
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a># 186 characters + 54 bytes overhead
+</span></code></pre></div>
+<p><strong>Key insight:</strong> For small values, overhead is a big percentage. For large values, overhead becomes less important.</p>
+<h3 id="3-enable-compression">3. Enable Compression</h3>
+<p><strong>What is compression?</strong> Redis can squeeze small data structures to use less memory, like compressing a zip file.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a># Configure hash compression (small hashes stored efficiently)
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>127.0.0.1:6379&gt; CONFIG SET hash-max-ziplist-entries 512
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>OK
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>127.0.0.1:6379&gt; CONFIG SET hash-max-ziplist-value 64
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>OK
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a># Configure list compression
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>127.0.0.1:6379&gt; CONFIG SET list-max-ziplist-size -2     # 8KB nodes
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>OK
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>127.0.0.1:6379&gt; CONFIG SET list-compress-depth 1       # Compress all but first/last
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>OK
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a># Test compression with a small hash
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>127.0.0.1:6379&gt; HSET compressed:test field1 &quot;value1&quot; field2 &quot;value2&quot; field3 &quot;value3&quot;
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>(integer) 3
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>127.0.0.1:6379&gt; DEBUG OBJECT compressed:test
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>Value at:0x7fb8a1c0c1e0 refcount:1 encoding:ziplist serializedlength:45 lru:677 lru_seconds_idle:5
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a># &quot;encoding:ziplist&quot; means Redis is using compression!
+</span></code></pre></div>
+<p><strong>What these settings mean:</strong></p>
+<ul>
+<li><code>hash-max-ziplist-entries 512</code> = Use compression for hashes with up to 512 fields</li>
+<li><code>hash-max-ziplist-value 64</code> = Use compression when each value is under 64 bytes</li>
+<li><code>list-compress-depth 1</code> = Compress all list nodes except the first and last (for fast access to ends)</li>
+</ul>
+<h3 id="4-set-appropriate-ttl">4. Set Appropriate TTL</h3>
+<p><strong>Why TTL helps:</strong> Automatic cleanup prevents memory from filling up with old data.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a># Clean up temporary data automatically
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>127.0.0.1:6379&gt; SETEX cache:temp 300 &quot;temporary_data&quot;      # 5 minutes
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>OK
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>127.0.0.1:6379&gt; SETEX session:user123 7200 &quot;session&quot;      # 2 hours
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>OK
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>127.0.0.1:6379&gt; SETEX rate_limit:user123 60 &quot;5&quot;           # 1 minute
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>OK
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a># Check how much time is left
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>127.0.0.1:6379&gt; TTL cache:temp
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>(integer) 287
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a># 287 seconds left before automatic deletion
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a># See all keys with expiration
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>127.0.0.1:6379&gt; SCAN 0 MATCH &quot;*&quot; | xargs -I {} sh -c &#39;echo &quot;Key: {}, TTL: $(redis-cli TTL {})&quot;&#39;
+</span></code></pre></div>
+<p><strong>Memory benefit:</strong> Data automatically disappears when no longer needed, preventing memory leaks.</p>
+<h3 id="5-monitor-key-distribution">5. Monitor Key Distribution</h3>
+<p><strong>Why monitor?</strong> Find which keys use the most memory so you can optimize them.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Analyze key patterns for optimization</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>redis-cli<span class="w"> </span>--bigkeys
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># Sample output:</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="o">[</span><span class="m">00</span>.00%<span class="o">]</span><span class="w"> </span>Biggest<span class="w"> </span>string<span class="w">  </span>found<span class="w"> </span>so<span class="w"> </span>far<span class="w"> </span><span class="s1">&#39;cache:large_page&#39;</span><span class="w"> </span>with<span class="w"> </span><span class="m">1048576</span><span class="w"> </span>bytes
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="o">[</span><span class="m">50</span>.00%<span class="o">]</span><span class="w"> </span>Biggest<span class="w"> </span>list<span class="w">    </span>found<span class="w"> </span>so<span class="w"> </span>far<span class="w"> </span><span class="s1">&#39;queue:tasks&#39;</span><span class="w"> </span>with<span class="w"> </span><span class="m">10000</span><span class="w"> </span>items<span class="w">  </span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="o">[</span><span class="m">75</span>.00%<span class="o">]</span><span class="w"> </span>Biggest<span class="w"> </span><span class="nb">hash</span><span class="w">    </span>found<span class="w"> </span>so<span class="w"> </span>far<span class="w"> </span><span class="s1">&#39;user:profile:1001&#39;</span><span class="w"> </span>with<span class="w"> </span><span class="m">50</span><span class="w"> </span>fields
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="o">[</span><span class="m">100</span>.00%<span class="o">]</span><span class="w"> </span>Biggest<span class="w"> </span><span class="nb">set</span><span class="w">     </span>found<span class="w"> </span>so<span class="w"> </span>far<span class="w"> </span><span class="s1">&#39;tags:popular&#39;</span><span class="w"> </span>with<span class="w"> </span><span class="m">5000</span><span class="w"> </span>members
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="o">[</span><span class="m">100</span>.00%<span class="o">]</span><span class="w"> </span>Biggest<span class="w"> </span>zset<span class="w">    </span>found<span class="w"> </span>so<span class="w"> </span>far<span class="w"> </span><span class="s1">&#39;leaderboard:global&#39;</span><span class="w"> </span>with<span class="w"> </span><span class="m">1000</span><span class="w"> </span>members
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>--------<span class="w"> </span>summary<span class="w"> </span>-------
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>Sampled<span class="w"> </span><span class="m">1000</span><span class="w"> </span>keys<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>keyspace!
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>Total<span class="w"> </span>key<span class="w"> </span>length<span class="w"> </span><span class="k">in</span><span class="w"> </span>bytes<span class="w"> </span>is<span class="w"> </span><span class="m">15000</span><span class="w"> </span><span class="o">(</span>avg<span class="w"> </span>len<span class="w"> </span><span class="m">15</span>.00<span class="o">)</span>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>Biggest<span class="w"> </span>string:<span class="w"> </span><span class="s1">&#39;cache:large_page&#39;</span><span class="w"> </span><span class="o">(</span><span class="m">1048576</span><span class="w"> </span>bytes<span class="o">)</span>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>Biggest<span class="w"> </span>list:<span class="w"> </span><span class="s1">&#39;queue:tasks&#39;</span><span class="w"> </span><span class="o">(</span><span class="m">10000</span><span class="w"> </span>items<span class="o">)</span><span class="w">  </span>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>Biggest<span class="w"> </span>hash:<span class="w"> </span><span class="s1">&#39;user:profile:1001&#39;</span><span class="w"> </span><span class="o">(</span><span class="m">50</span><span class="w"> </span>fields<span class="o">)</span>
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>Biggest<span class="w"> </span>set:<span class="w"> </span><span class="s1">&#39;tags:popular&#39;</span><span class="w"> </span><span class="o">(</span><span class="m">5000</span><span class="w"> </span>members<span class="o">)</span>
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>Biggest<span class="w"> </span>zset:<span class="w"> </span><span class="s1">&#39;leaderboard:global&#39;</span><span class="w"> </span><span class="o">(</span><span class="m">1000</span><span class="w"> </span>members<span class="o">)</span>
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>
+</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="m">5</span><span class="w"> </span>strings<span class="w"> </span>with<span class="w"> </span><span class="m">2097152</span><span class="w"> </span>total<span class="w"> </span>bytes<span class="w"> </span><span class="o">(</span><span class="m">41</span>.94%<span class="w"> </span>of<span class="w"> </span>keys,<span class="w"> </span>avg<span class="w"> </span>size<span class="w"> </span><span class="m">419430</span>.40<span class="o">)</span>
+</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="m">2</span><span class="w"> </span>lists<span class="w"> </span>with<span class="w"> </span><span class="m">10500</span><span class="w"> </span>total<span class="w"> </span>items<span class="w"> </span><span class="o">(</span><span class="m">0</span>.20%<span class="w"> </span>of<span class="w"> </span>keys,<span class="w"> </span>avg<span class="w"> </span>size<span class="w"> </span><span class="m">5250</span>.00<span class="o">)</span>
+</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="m">1</span><span class="w"> </span>hashs<span class="w"> </span>with<span class="w"> </span><span class="m">50</span><span class="w"> </span>total<span class="w"> </span>fields<span class="w"> </span><span class="o">(</span><span class="m">0</span>.10%<span class="w"> </span>of<span class="w"> </span>keys,<span class="w"> </span>avg<span class="w"> </span>size<span class="w"> </span><span class="m">50</span>.00<span class="o">)</span>
+</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="m">1</span><span class="w"> </span>sets<span class="w"> </span>with<span class="w"> </span><span class="m">5000</span><span class="w"> </span>total<span class="w"> </span>members<span class="w"> </span><span class="o">(</span><span class="m">0</span>.10%<span class="w"> </span>of<span class="w"> </span>keys,<span class="w"> </span>avg<span class="w"> </span>size<span class="w"> </span><span class="m">5000</span>.00<span class="o">)</span><span class="w">  </span>
+</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="m">1</span><span class="w"> </span>zsets<span class="w"> </span>with<span class="w"> </span><span class="m">1000</span><span class="w"> </span>total<span class="w"> </span>members<span class="w"> </span><span class="o">(</span><span class="m">0</span>.10%<span class="w"> </span>of<span class="w"> </span>keys,<span class="w"> </span>avg<span class="w"> </span>size<span class="w"> </span><span class="m">1000</span>.00<span class="o">)</span>
+</span></code></pre></div>
+<p><strong>What this tells you:</strong></p>
+<ul>
+<li><code>cache:large_page</code> is using 1MB - maybe too big for a cache entry</li>
+<li><code>queue:tasks</code> has 10,000 items - might need cleanup</li>
+<li>Most memory (41.94%) is used by string keys</li>
+<li>You have 1000 total keys using 15KB for key names (average 15 bytes per key name)</li>
+</ul>
+<hr />
+<h2 id="monitoring-memory-and-persistence">Monitoring Memory and Persistence</h2>
+<h3 id="memory-monitoring-commands">Memory Monitoring Commands</h3>
+<p><strong>Why monitor memory?</strong> To catch problems before Redis runs out of space or slows down.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a># Memory overview - get the big picture
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>127.0.0.1:6379&gt; INFO memory
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a># Memory
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>used_memory:1048576
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>used_memory_human:1.00M
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>used_memory_rss:2097152
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>used_memory_rss_human:2.00M
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>used_memory_peak:1200000
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>used_memory_peak_human:1.14M
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>used_memory_peak_perc:87.38%
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>mem_fragmentation_ratio:2.00
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>mem_fragmentation_bytes:1048576
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>maxmemory:0
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>maxmemory_human:0B
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>maxmemory_policy:noeviction
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>allocator_allocated:1000000
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>allocator_active:1500000
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>allocator_resident:2000000
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a># Memory usage by sample - deeper analysis
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>127.0.0.1:6379&gt; MEMORY STATS
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a> 1) &quot;peak.allocated&quot;
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a> 2) (integer) 1200000
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a> 3) &quot;total.allocated&quot;  
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a> 4) (integer) 1048576
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a> 5) &quot;startup.allocated&quot;
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a> 6) (integer) 524288
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a> 7) &quot;replication.backlog&quot;
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a> 8) (integer) 0
+</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a> 9) &quot;clients.slaves&quot;
+</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a>10) (integer) 0
+</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a>11) &quot;clients.normal&quot;
+</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a>12) (integer) 16384
+</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a>13) &quot;aof.buffer&quot;
+</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a>14) (integer) 0
+</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a>15) &quot;db.0&quot;
+</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a>16) 1) &quot;overhead.hashtable.main&quot;
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a>    2) (integer) 72
+</span><span id="__span-20-39"><a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a>    3) &quot;overhead.hashtable.expires&quot;
+</span><span id="__span-20-40"><a id="__codelineno-20-40" name="__codelineno-20-40" href="#__codelineno-20-40"></a>    4) (integer) 0
+</span><span id="__span-20-41"><a id="__codelineno-20-41" name="__codelineno-20-41" href="#__codelineno-20-41"></a>
+</span><span id="__span-20-42"><a id="__codelineno-20-42" name="__codelineno-20-42" href="#__codelineno-20-42"></a># Doctor report (Redis 4.0+) - get advice from Redis
+</span><span id="__span-20-43"><a id="__codelineno-20-43" name="__codelineno-20-43" href="#__codelineno-20-43"></a>127.0.0.1:6379&gt; MEMORY DOCTOR
+</span><span id="__span-20-44"><a id="__codelineno-20-44" name="__codelineno-20-44" href="#__codelineno-20-44"></a>&quot;Hi Sam, I can see you have some peak memory usage issues. You can reduce memory usage by setting a limit with CONFIG SET maxmemory &lt;bytes&gt;.&quot;
+</span><span id="__span-20-45"><a id="__codelineno-20-45" name="__codelineno-20-45" href="#__codelineno-20-45"></a>
+</span><span id="__span-20-46"><a id="__codelineno-20-46" name="__codelineno-20-46" href="#__codelineno-20-46"></a># Track memory usage over time - quick check
+</span><span id="__span-20-47"><a id="__codelineno-20-47" name="__codelineno-20-47" href="#__codelineno-20-47"></a>127.0.0.1:6379&gt; INFO memory | grep used_memory_human
+</span><span id="__span-20-48"><a id="__codelineno-20-48" name="__codelineno-20-48" href="#__codelineno-20-48"></a>used_memory_human:1.00M
+</span></code></pre></div>
+<p><strong>Understanding the important numbers:</strong></p>
+<ul>
+<li><code>used_memory_human:1.00M</code> = Redis is using 1MB of memory for your data</li>
+<li><code>used_memory_rss_human:2.00M</code> = Operating system sees Redis using 2MB (includes fragmentation)</li>
+<li><code>mem_fragmentation_ratio:2.00</code> = Memory is fragmented (2x more OS memory than data)</li>
+<li><code>maxmemory:0</code> = No memory limit set (could use all system memory!)</li>
+</ul>
+<h3 id="persistence-monitoring">Persistence Monitoring</h3>
+<p><strong>Why monitor persistence?</strong> To make sure your data is actually being saved and backups are working.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a># Check RDB and AOF status - see if saves are working
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>127.0.0.1:6379&gt; INFO persistence
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a># Persistence
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>loading:0
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>rdb_changes_since_last_save:15
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>rdb_bgsave_in_progress:0
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>rdb_last_save_time:1705751400
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>rdb_last_bgsave_status:ok
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>rdb_last_bgsave_time_sec:2
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>rdb_current_bgsave_time_sec:-1
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>rdb_saves:5
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>rdb_last_cow_size:1048576
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>aof_enabled:1
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>aof_rewrite_in_progress:0
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>aof_rewrite_scheduled:0
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>aof_last_rewrite_time_sec:3
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>aof_current_rewrite_time_sec:-1
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>aof_last_bgrewrite_status:ok
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>aof_last_write_status:ok
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>aof_last_cow_size:524288
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>aof_current_size:2048
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a>aof_base_size:1024
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a>aof_pending_rewrite:0
+</span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a>aof_buffer_length:0
+</span><span id="__span-21-25"><a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a>aof_rewrite_buffer_length:0
+</span><span id="__span-21-26"><a id="__codelineno-21-26" name="__codelineno-21-26" href="#__codelineno-21-26"></a>aof_pending_bio_fsync:0
+</span><span id="__span-21-27"><a id="__codelineno-21-27" name="__codelineno-21-27" href="#__codelineno-21-27"></a>aof_delayed_fsync:0
+</span></code></pre></div>
+<p><strong>Key things to watch:</strong></p>
+<ul>
+<li><code>rdb_last_bgsave_status:ok</code> = Last RDB save worked fine</li>
+<li><code>rdb_changes_since_last_save:15</code> = 15 changes since last save (might need a new snapshot soon)</li>
+<li><code>aof_last_write_status:ok</code> = AOF is writing successfully</li>
+<li><code>aof_current_size:2048</code> vs <code>aof_base_size:1024</code> = AOF doubled in size, might need rewrite</li>
+</ul>
+<h3 id="setting-up-alerts">Setting Up Alerts</h3>
+<p><strong>What to monitor in production:</strong> These numbers tell you when something is wrong.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Memory usage &gt; 80% (getting close to limit)</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>used_memory<span class="w"> </span>/<span class="w"> </span>maxmemory<span class="w"> </span>&gt;<span class="w"> </span><span class="m">0</span>.8
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># High fragmentation (wasting memory)  </span>
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>mem_fragmentation_ratio<span class="w"> </span>&gt;<span class="w"> </span><span class="m">1</span>.5
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="c1"># Failed saves (data not being backed up!)</span>
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>rdb_last_bgsave_status<span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span>
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="c1"># AOF growing too fast (disk space problem)</span>
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>aof_current_size<span class="w"> </span>&gt;<span class="w"> </span>aof_base_size<span class="w"> </span>*<span class="w"> </span><span class="m">3</span>
+</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>
+</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="c1"># Too many changes without save (potential data loss)</span>
+</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>rdb_changes_since_last_save<span class="w"> </span>&gt;<span class="w"> </span><span class="m">10000</span>
+</span></code></pre></div>
+<p><strong>How to check these with commands:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a># Check memory percentage (if you set maxmemory)
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>127.0.0.1:6379&gt; INFO memory | grep -E &quot;(used_memory:|maxmemory:)&quot;
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>used_memory:1048576
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>maxmemory:2097152
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a># Calculate: 1048576 / 2097152 = 0.5 = 50% memory used
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a># Check fragmentation
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>127.0.0.1:6379&gt; INFO memory | grep mem_fragmentation_ratio
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>mem_fragmentation_ratio:1.25
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a># 1.25 is good (between 1.0-1.5)
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a># Check save status
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>127.0.0.1:6379&gt; INFO persistence | grep rdb_last_bgsave_status
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>rdb_last_bgsave_status:ok
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a># &quot;ok&quot; means saves are working
+</span></code></pre></div></p>
+<hr />
+<h2 id="common-memory-issues-and-solutions">Common Memory Issues and Solutions</h2>
+<h3 id="issue-1-memory-fragmentation">Issue 1: Memory Fragmentation</h3>
+<p><strong>What is fragmentation?</strong> Think of it like having a messy closet - you have space, but it's all broken up into small pieces that are hard to use.</p>
+<p><strong>Problem:</strong> <code>mem_fragmentation_ratio &gt; 1.5</code></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a># Check fragmentation - see how messy your memory is
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>127.0.0.1:6379&gt; INFO memory | grep fragmentation_ratio
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>mem_fragmentation_ratio:2.34
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a># 2.34 means Redis is using 2.34x more OS memory than needed - very fragmented!
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a># Check what this means in actual bytes
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>127.0.0.1:6379&gt; INFO memory | grep -E &quot;(used_memory:|used_memory_rss:)&quot;
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>used_memory:1048576      # 1MB of actual data
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>used_memory_rss:2455552  # 2.3MB used by OS (wasted: 1.3MB)
+</span></code></pre></div>
+<p><strong>Solutions:</strong>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a># Solution 1: Restart Redis (temporary fix - like cleaning your closet)
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a># This requires downtime but immediately fixes fragmentation
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a># Solution 2: Use memory defragmentation (Redis 4.0+)
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>127.0.0.1:6379&gt; CONFIG SET activedefrag yes
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>OK
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>127.0.0.1:6379&gt; CONFIG GET activedefrag
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>1) &quot;activedefrag&quot;
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>2) &quot;yes&quot;
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a># Redis will slowly reorganize memory in the background
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a># Solution 3: Adjust memory allocator settings
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>127.0.0.1:6379&gt; CONFIG SET jemalloc-bg-thread yes
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>OK
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a># Helps the memory allocator work more efficiently
+</span></code></pre></div></p>
+<h3 id="issue-2-memory-leaks">Issue 2: Memory Leaks</h3>
+<p><strong>What is a memory leak?</strong> Data that should be deleted but isn't, like leaving old food in your fridge.</p>
+<p><strong>Problem:</strong> Memory keeps growing without new data</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a># Find large keys that might be eating memory
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>redis-cli --bigkeys
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a># Look for surprisingly large keys in the output
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a># Check for keys without TTL that should expire
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>redis-cli --scan --pattern &quot;temp:*&quot; | head -10
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>temp:user_session_abc123
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>temp:cache_result_xyz789
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>temp:download_token_456
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a># Check if these temporary keys have expiration
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>127.0.0.1:6379&gt; TTL temp:user_session_abc123  
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>(integer) -1  # -1 means no expiration set - this is a leak!
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>127.0.0.1:6379&gt; TTL temp:cache_result_xyz789
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a>(integer) -1  # Another leak!
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a># Fix by adding expiration to existing keys
+</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a>127.0.0.1:6379&gt; EXPIRE temp:user_session_abc123 3600  # 1 hour
+</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>(integer) 1
+</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>127.0.0.1:6379&gt; EXPIRE temp:cache_result_xyz789 1800  # 30 minutes  
+</span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a>(integer) 1
+</span></code></pre></div>
+<p><strong>Find memory leaks with specific patterns:</strong>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># Find all keys by memory usage (if available)</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>redis-cli<span class="w"> </span>--memkeys
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="c1"># Count keys by pattern to find unexpected growth</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>redis-cli<span class="w"> </span>--scan<span class="w"> </span>--pattern<span class="w"> </span><span class="s2">&quot;user:*&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>redis-cli<span class="w"> </span>--scan<span class="w"> </span>--pattern<span class="w"> </span><span class="s2">&quot;cache:*&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="w">  </span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>redis-cli<span class="w"> </span>--scan<span class="w"> </span>--pattern<span class="w"> </span><span class="s2">&quot;session:*&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+</span></code></pre></div></p>
+<h3 id="issue-3-persistence-failures">Issue 3: Persistence Failures</h3>
+<p><strong>What happens when saves fail?</strong> Your data isn't backed up - like forgetting to save your homework.</p>
+<p><strong>Problem:</strong> RDB/AOF saves failing</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a># Check disk space - most common cause of save failures
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>127.0.0.1:6379&gt; INFO server | grep used_memory
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>used_memory:1048576
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a># Compare this with available disk space using system commands:
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a># df -h /var/lib/redis (Linux)
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a># dir C:\redis-data (Windows)
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a># Check permissions - make sure Redis can write files
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>127.0.0.1:6379&gt; CONFIG GET dir
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>1) &quot;dir&quot;
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>2) &quot;/var/lib/redis&quot;
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a># Make sure this directory exists and Redis can write to it
+</span><span id="__span-28-13"><a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>
+</span><span id="__span-28-14"><a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a># Test if you can save manually
+</span><span id="__span-28-15"><a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>127.0.0.1:6379&gt; BGSAVE
+</span><span id="__span-28-16"><a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a>Background saving started
+</span><span id="__span-28-17"><a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a># Wait a moment, then check:
+</span><span id="__span-28-18"><a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a>127.0.0.1:6379&gt; LASTSAVE
+</span><span id="__span-28-19"><a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a>(integer) 1705751500  # New timestamp means save worked
+</span><span id="__span-28-20"><a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a>
+</span><span id="__span-28-21"><a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a># Check for save errors in the log
+</span><span id="__span-28-22"><a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a>127.0.0.1:6379&gt; INFO persistence | grep bgsave_status
+</span><span id="__span-28-23"><a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a>rdb_last_bgsave_status:ok  # Should be &quot;ok&quot;, not &quot;err&quot;
+</span><span id="__span-28-24"><a id="__codelineno-28-24" name="__codelineno-28-24" href="#__codelineno-28-24"></a>
+</span><span id="__span-28-25"><a id="__codelineno-28-25" name="__codelineno-28-25" href="#__codelineno-28-25"></a># Fix AOF corruption if needed
+</span><span id="__span-28-26"><a id="__codelineno-28-26" name="__codelineno-28-26" href="#__codelineno-28-26"></a>redis-check-aof --fix appendonly.aof
+</span><span id="__span-28-27"><a id="__codelineno-28-27" name="__codelineno-28-27" href="#__codelineno-28-27"></a># Run this command from terminal when Redis is stopped
+</span></code></pre></div>
+<p><strong>Common persistence problems and fixes:</strong></p>
+<ol>
+<li><strong>No disk space</strong> = Delete old files or add more disk space</li>
+<li><strong>Permission denied</strong> = Fix file/directory permissions  </li>
+<li><strong>Memory too low for fork</strong> = Add more RAM or reduce Redis memory usage</li>
+<li><strong>Corrupted AOF file</strong> = Use <code>redis-check-aof --fix</code> to repair</li>
+</ol>
+<hr />
+<h2 id="practical-exercises">Practical Exercises</h2>
+<h3 id="exercise-1-memory-analysis">Exercise 1: Memory Analysis</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a># Setup test data
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>SET test:string &quot;Hello Redis&quot;
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>HSET test:hash field1 &quot;value1&quot; field2 &quot;value2&quot;
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>LPUSH test:list &quot;item1&quot; &quot;item2&quot; &quot;item3&quot;
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>SADD test:set &quot;member1&quot; &quot;member2&quot; &quot;member3&quot;
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a># Analyze memory usage
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>MEMORY USAGE test:string
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>MEMORY USAGE test:hash  
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>MEMORY USAGE test:list
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>MEMORY USAGE test:set
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>
+</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a># Compare with INFO memory before and after
+</span></code></pre></div>
+<h3 id="exercise-2-persistence-setup">Exercise 2: Persistence Setup</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a># Configure RDB snapshots
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>CONFIG SET save &quot;300 10&quot;  # Save if 10 changes in 5 minutes
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>CONFIG SET dbfilename &quot;exercise.rdb&quot;
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a># Make some changes
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>SET counter 1
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>INCR counter
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>HSET user:test name &quot;Test User&quot;
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a># Force save and check
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>BGSAVE
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>LASTSAVE
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a>
+</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a># Configure AOF
+</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>CONFIG SET appendonly yes
+</span><span id="__span-30-16"><a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a>CONFIG SET appendfsync everysec
+</span></code></pre></div>
+<h3 id="exercise-3-memory-optimization">Exercise 3: Memory Optimization</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a># Create inefficient structure
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>SET user:1:name &quot;John&quot;
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>SET user:1:email &quot;john@example.com&quot;
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>SET user:1:age &quot;30&quot;
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>SET user:1:city &quot;New York&quot;
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a># Measure memory
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>MEMORY USAGE user:1:name
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>MEMORY USAGE user:1:email
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>MEMORY USAGE user:1:age
+</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>MEMORY USAGE user:1:city
+</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>
+</span><span id="__span-31-13"><a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a># Convert to efficient hash
+</span><span id="__span-31-14"><a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a>DEL user:1:name user:1:email user:1:age user:1:city
+</span><span id="__span-31-15"><a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a>HSET user:1 name &quot;John&quot; email &quot;john@example.com&quot; age &quot;30&quot; city &quot;New York&quot;
+</span><span id="__span-31-16"><a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a>
+</span><span id="__span-31-17"><a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a># Compare memory usage
+</span><span id="__span-31-18"><a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a>MEMORY USAGE user:1
+</span></code></pre></div>
+<hr />
+<h2 id="memory-and-persistence-checklist">Memory and Persistence Checklist</h2>
+<p>For production deployments:</p>
+<p><strong>Memory Management:</strong></p>
+<ul>
+<li>Set appropriate <code>maxmemory</code> limit</li>
+<li>Configure suitable eviction policy</li>
+<li>Monitor memory fragmentation</li>
+<li>Use efficient data structures</li>
+<li>Set TTL on temporary data</li>
+</ul>
+<p><strong>Persistence:</strong></p>
+<ul>
+<li>Choose appropriate persistence strategy</li>
+<li>Configure automatic saves/rewrites</li>
+<li>Monitor persistence operations</li>
+<li>Test recovery procedures</li>
+<li>Set up backup strategies</li>
+</ul>
+<p><strong>Monitoring:</strong></p>
+<ul>
+<li>Track memory usage trends</li>
+<li>Alert on high memory usage</li>
+<li>Monitor save/rewrite durations</li>
+<li>Check disk space for persistence files</li>
+<li>Log persistence failures</li>
+</ul>
+<hr />
+<h2 id="whats-next">What's Next?</h2>
+<p>Now let's learn about configuring Redis for different use cases and environments.</p>
+<p>The next section will cover:</p>
+<ul>
+<li>Essential Redis configuration options</li>
+<li>Performance tuning parameters</li>
+<li>Security settings</li>
+<li>Environment-specific configurations</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../redis_keys_values/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Keys And Values">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Keys And Values
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../redis_configuration_basics/" class="md-footer__link md-footer__link--next" aria-label="Next: Configuration Basics">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Configuration Basics
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 - 2028 Mitarpal Grover
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://linkedin.com/in/mitarpalgrover" target="_blank" rel="noopener" title="linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://youtube.com" target="_blank" rel="noopener" title="youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.instant.progress", "search.suggest", "search.highlight", "search.share", "navigation.footer", "navigation.top", "content.tabs.link", "content.code.copy", "toc.follow", "content.code.select", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+    
+  </body>
+</html>
