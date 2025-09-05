@@ -22,6 +22,7 @@ nav:
     - Set Operations : core-concepts/set-operations.md
     - Hash Operations : core-concepts/hash-operations.md
     - Sorted Set Operations : core-concepts/sorted-set-operations.md
+    - Expiration and TTL : core-concepts/expiration-and-ttl.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
