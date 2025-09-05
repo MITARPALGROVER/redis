@@ -40,6 +40,13 @@ nav:
     - Common Errors : troubleshooting/common-errors.md
     - Performance Tuning : troubleshooting/performance-tuning.md
     - Debugging Tips : troubleshooting/debugging-tips.md
+  - Resources :
+    - Useful Tools : resources/useful-tools.md
+    - Glossary : resources/glossary.md
+    - Cheat Sheet : resources/cheat-sheet.md
+    - Official Documentation : resources/official-docs.md
+
+    
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
 repo_name: MITARPALGROVER/redis
