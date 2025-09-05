@@ -1,143 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://mydomain.org/mysite/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/advanced-topics/clustering/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/advanced-topics/clustering/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/advanced-topics/lua-scripting/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/advanced-topics/lua-scripting/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/advanced-topics/pub-sub/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/advanced-topics/pub-sub/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/advanced-topics/replication/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/advanced-topics/replication/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/advanced-topics/security/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/advanced-topics/security/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/advanced-topics/transactions/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/advanced-topics/transactions/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/core-concepts/commands-overview/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/core-concepts/commands-overview/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/core-concepts/expiration-and-ttl/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/core-concepts/expiration-and-ttl/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/core-concepts/hash-operations/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/core-concepts/hash-operations/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/core-concepts/list-operations/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/core-concepts/list-operations/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/core-concepts/set-operations/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/core-concepts/set-operations/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/core-concepts/sorted-set-operations/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/core-concepts/sorted-set-operations/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/core-concepts/string-operations/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/core-concepts/string-operations/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/fundamentals/configuration-basics/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/fundamentals/configuration-basics/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/fundamentals/redis_configuration_basics/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/fundamentals/redis_configuration_basics/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/fundamentals/redis_data_types/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/fundamentals/redis_data_types/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/fundamentals/redis_keys_values/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/fundamentals/redis_keys_values/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/fundamentals/redis_memory_persistence/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/fundamentals/redis_memory_persistence/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/getting-started/redis_cli_basics/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/getting-started/redis_cli_basics/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/getting-started/redis_first_steps/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/getting-started/redis_first_steps/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/getting-started/redis_installation/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/getting-started/redis_installation/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/getting-started/what_is_redis/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/getting-started/what_is_redis/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/practical-examples/caching-basics/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/practical-examples/caching-basics/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/practical-examples/leaderboards/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/practical-examples/leaderboards/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/practical-examples/rate-limiting/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/practical-examples/rate-limiting/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/practical-examples/real-time-features/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/practical-examples/real-time-features/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/practical-examples/session-storage/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/practical-examples/session-storage/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/resources/cheat-sheet/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/resources/cheat-sheet/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/resources/glossary/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/resources/glossary/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/resources/official-docs/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/resources/official-docs/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/resources/useful-tools/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/resources/useful-tools/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/troubleshooting/common-errors/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/troubleshooting/common-errors/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/troubleshooting/debugging-tips/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/troubleshooting/debugging-tips/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
     <url>
-         <loc>https://mydomain.org/mysite/troubleshooting/performance-tuning/</loc>
+         <loc>https://mitarpalgrover.github.io/redis-documentation/troubleshooting/performance-tuning/</loc>
          <lastmod>2025-09-05</lastmod>
     </url>
 </urlset>
