@@ -21,6 +21,7 @@ nav:
     - List Operations : core-concepts/list-operations.md
     - Set Operations : core-concepts/set-operations.md
     - Hash Operations : core-concepts/hash-operations.md
+    - Sorted Set Operations : core-concepts/sorted-set-operations.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
