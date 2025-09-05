@@ -32,6 +32,7 @@ nav:
   - Advanced Topics :
     - Pub/Sub : advanced-topics/pub-sub.md
     - Transactions : advanced-topics/transactions.md
+    - Lua Scripting : advanced-topics/lua-scripting.md
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
 repo_name: MITARPALGROVER/redis
