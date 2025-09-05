@@ -10,6 +10,8 @@ nav:
     - Installation : getting-started/redis_installation.md
     - First Step : getting-started/redis_first_steps.md
     - Redis CLI Basics : getting-started/redis_cli_basics.md
+  - Fundamentals :
+    - Redis Datatypes : fundamentals/redis_data_types.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
