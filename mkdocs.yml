@@ -3,16 +3,12 @@ site_description: "A comprehensive guide to Redis for freshers and beginners"
 site_author: "Mitarpal Grover"
 site_url: https://mydomain.org/mysite
 
-# nav:
-#   - Welcome to Redis : index.md
-#   - Introduction : instruction.md
-#   - Installation & Setup : installation.md
-#   - Getting Started (Basics) : gettingstarted.md
-#   - Hands-On Examples : handson.md
-#   - Advanced Concepts  : advanced.md
-#   - Best Practices  : bestpractices.md
-#   - Resources  : resourcse.md
-#   - About  : about.md
+nav:
+  - Welcome to Redis : index.md
+  - Getting Started : 
+    - What is Redis? : getting-started/what_is_redis.md
+    - Installation : getting-started/redis_installation.md
+    - First Step : getting-started/redis_first_steps.md
 
 
 repo_url: https://github.com/MITARPALGROVER/redis-documentation.git
@@ -46,9 +42,12 @@ theme:
     - navigation.footer
     # - navigation.tabs
     - navigation.top
-    - toc.integrate
+    # - toc.integrate
     - content.tabs.link
     - content.code.copy
+    - toc.follow
+    - content.code.select
+    - content.code.annotate
 
 
 
@@ -78,3 +77,17 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - tables
+  - md_in_html
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
