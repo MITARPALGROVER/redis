@@ -1,0 +1,44 @@
+redis-guide/
+├── mkdocs.yml
+├── docs/
+│   ├── index.md
+│   ├── getting-started/
+│   │   ├── what-is-redis.md
+│   │   ├── installation.md
+│   │   ├── first-steps.md
+│   │   └── redis-cli-basics.md
+│   ├── fundamentals/
+│   │   ├── data-types.md
+│   │   ├── keys-and-values.md
+│   │   ├── memory-and-persistence.md
+│   │   └── configuration-basics.md
+│   ├── core-concepts/
+│   │   ├── commands-overview.md
+│   │   ├── string-operations.md
+│   │   ├── list-operations.md
+│   │   ├── set-operations.md
+│   │   ├── hash-operations.md
+│   │   ├── sorted-set-operations.md
+│   │   └── expiration-and-ttl.md
+│   ├── practical-examples/
+│   │   ├── caching-basics.md
+│   │   ├── session-storage.md
+│   │   ├── rate-limiting.md
+│   │   ├── leaderboards.md
+│   │   └── real-time-features.md
+│   ├── advanced-topics/
+│   │   ├── pub-sub.md
+│   │   ├── transactions.md
+│   │   ├── lua-scripting.md
+│   │   ├── clustering.md
+│   │   ├── replication.md
+│   │   └── security.md
+│   ├── troubleshooting/
+│   │   ├── common-errors.md
+│   │   ├── performance-tuning.md
+│   │   └── debugging-tips.md
+│   └── resources/
+│       ├── cheat-sheet.md
+│       ├── useful-tools.md
+│       ├── further-reading.md
+│       └── glossary.md
