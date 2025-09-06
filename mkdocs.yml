@@ -1,10 +1,10 @@
 site_name: "Guide to Redis"
 site_description: "A comprehensive guide to Redis for freshers and beginners"
 site_author: "Mitarpal Grover"
-site_url: https://mitarpalgrover.github.io/redis-documentation/
+site_url: https://mitarpalgrover.github.io/redis/
 
 nav:
-  - Welcome to Redis : index.md
+  - Welcome to the Guide : index.md
   - Getting Started : 
     - What is Redis? : getting-started/what_is_redis.md
     - Installation : getting-started/redis_installation.md
@@ -14,7 +14,7 @@ nav:
     - Redis Datatypes : fundamentals/redis_data_types.md
     - Keys And Values : fundamentals/redis_keys_values.md
     - Memory Persistence : fundamentals/redis_memory_persistence.md
-    - Configuration Basics : fundamentals/configuration-basics.md
+    - Configuration Basics : fundamentals/redis_configuration_basics.md
   - Core Concepts :
     - Commands Overview : core-concepts/commands-overview.md
     - String Operations : core-concepts/string-operations.md
@@ -85,7 +85,6 @@ theme:
     - toc.follow
     - content.code.select
     - content.code.annotate
-    
 
 
 
@@ -130,3 +129,5 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true

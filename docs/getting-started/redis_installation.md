@@ -5,7 +5,8 @@ Ready to get Redis running on your system? This guide covers installation for **
 !!! tip "Recommended for Beginners"
     If you're completely new to Redis, I recommend starting with **Docker** - it's the most consistent across all systems and easiest to manage.
 
-## Option 1: Docker Installation (Recommended)
+=== "Docker"
+## Docker Installation (Recommended)
 
 ### Why Docker?
 - **Works on any system** (Windows, macOS, Linux)
@@ -66,9 +67,9 @@ docker logs my-redis
 docker rm -f my-redis
 ```
 
----
+=== "Windows"
 
-## Option 2: Windows Installation
+## Windows Installation
 
 ### Method A: Using Windows Subsystem for Linux (WSL) - Recommended
 
@@ -102,9 +103,10 @@ docker rm -f my-redis
    redis-cli
    ```
 
----
 
-## Option 3: macOS Installation
+=== "macOS"
+
+## macOS Installation
 
 ### Method A: Using Homebrew (Recommended)
 
@@ -160,13 +162,11 @@ brew services stop redis
 # Restart Redis
 brew services restart redis
 
-# Start Redis manually (stops when terminal closes)
-redis-server
 ```
 
----
+=== "Linux"
 
-## Option 4: Linux Installation
+## Linux Installation
 
 ### Ubuntu/Debian
 

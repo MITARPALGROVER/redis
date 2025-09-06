@@ -1,4 +1,4 @@
-# Welcome to Redis for Beginners
+# Welcome to Redis Guide for Beginners
 ### The complete guide to learn Redis from 0 to hero
 
 It is one of the most popular in-memory data stores, being used by millions of applications across globe. If you are a student, fresher or junior developer, study this guide and you will be taken from knowing nothing about Redis to using it productively in a real work situation.
@@ -38,46 +38,44 @@ You need minimal background knowledge:
 ## Learning Path
 Choose your path based on your background and time availability:
 
-### Path 1: Complete Beginner (2-3 weeks)
+### Complete Beginner
 
 Perfect if you're new to databases and caching
 
-1. **Week 1**: [Getting Started] → [Fundamentals]
-2. **Week 2**: [Core Concepts] (focus on Strings and Lists)
-3. **Week 3**: [One Practical Example] → Practice
+1. [Getting Started] → [Fundamentals]
+2. [Core Concepts] (focus on Strings and Lists)
+3. [One Practical Example] → Practice
 
-    [Getting Started]: #
-    [Fundamentals]: #
-    [Core Concepts]: #
-    [One Practical Example]: #
+    [Getting Started]: getting-started/what_is_redis.md
+    [Fundamentals]: fundamentals/redis_data_types.md
+    [Core Concepts]: core-concepts/commands-overview.md
+    [One Practical Example]: practical-examples/caching-basics.md
 
-### Path 2: Developer Track (1-2 weeks)
+### Developer Track
 
 *If you have database or programming experience*
 
-1. **Days 1-3**: [What is Redis?] → [Installation] → [Core Concepts]
-2. **Days 4-7**: [Programming with Redis] → [Practical Examples]
-3. **Week 2**: Choose advanced topics based on your needs
+1. [What is Redis?] → [Installation] → [Core Concepts]
+2. [Practical Examples] → Proggraming with Redis
+3. Choose advanced topics based on your needs
 
-    [What is Redis?]: #
-    [Installation]: #
-    [Core Concepts]: #
-    [Programming with Redis]: #
-    [Practical Examples]: #
+    [What is Redis?]: getting-started/what_is_redis.md
+    [Installation]: getting-started/redis_installation.md
+    [Core Concepts]: core-concepts/commands-overview.md
+    [Practical Examples]: practical-examples/caching-basics.md
 
-### Path 3: Advanced Fast Track (3-5 days)
+### Advanced Fast Track
 
 *Already familiar with similar technologies*
 
-1. **Day 1**: Quick overview → [Installation]
-2. **Day 2-3**: [Advanced Topics] → [Deployment]
-3. **Day 4-5**: [Troubleshooting] → [Practice projects]
+1. [Quick overview] → [Installation]
+2. [Advanced Topics] → Deployement
+3. [Troubleshooting] → Practice projects
 
-    [Installation]: #
-    [Advanced Topics]: #
-    [Deployment]: #
-    [Troubleshooting]: #
-    [Practice projects]: #
+    [Quick overview]: getting-started/what_is_redis.md
+    [Installation]: getting-started/redis_installation.md
+    [Advanced Topics]: advanced-topics/pub-sub.md
+    [Troubleshooting]: troubleshooting/common-errors.md
 
 ## What You'll Build
 
@@ -91,11 +89,11 @@ Throughout your guide, you'll create several real projects:
 |Gaming Leaderboard|Sorted sets, rankings, real-time updates   |[Leaderboards]      |
 |Real-time Chat    |Pub/Sub, messaging, event handling         |[Real-time Features]|
 
-[Caching Basics]: #
-[Session Storage]: #
-[Rate Limiting]: #
-[Leaderboards]: #
-[Real-time Features]: #
+[Caching Basics]: practical-examples/caching-basics.md
+[Session Storage]: practical-examples/session-storage.md
+[Rate Limiting]: practical-examples/rate-limiting.md
+[Leaderboards]: practical-examples/leaderboards.md
+[Real-time Features]: practical-examples/real-time-features.md
 
 ## How To Use This Guide
 
@@ -115,7 +113,7 @@ Throughout your guide, you'll create several real projects:
 - **Topic-based**: Jump to specific topics using the search or navigation menu
 - **Reference**: Use the [Cheat Sheet] for quick lookups
 
-    [Cheat Sheet]: #
+    [Cheat Sheet]: resources/cheat-sheet.md
 
 <!-- ### 3. Interactive Elements
 
@@ -145,9 +143,9 @@ Ready to dive in? Here's your 5-minute quick start:
 2. [Run your first commands]
 3. [Try a simple example]
 
-    [Install Redis]: #
-    [Run your first commands]: #
-    [Try a simple example]: #
+    [Install Redis]: getting-started/redis_installation.md
+    [Run your first commands]: getting-started/redis_first_steps.md
+    [Try a simple example]: practical-examples/caching-basics.md
 
 ## Ready TO Start
 
@@ -155,19 +153,19 @@ Choose your starting point:
 
 <div class="grid cards" markdown>
 
-- :material-school: [Complete Beginner](#)
+- :material-school: [Complete Beginner](getting-started/redis_first_steps.md)
 
     ---
 
     Never heard of Redis? Start here for a gentle introduction to everything you need to know.
 
-- :material-code-braces: [I'm a Developer](#)
+- :material-code-braces: [I'm a Developer](core-concepts/commands-overview.md)
 
     ---
 
     Skip the basics and jump straight to Redis commands and programming examples.
 
-- :material-rocket-launch: [Show Me the Code](#)
+- :material-rocket-launch: [Show Me the Code](practical-examples/caching-basics.md)
 
     ---
 

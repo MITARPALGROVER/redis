@@ -10,7 +10,7 @@ The official documentation contains:
 - Installation guides for all platforms
 - Configuration options and best practices
 - Advanced topics and use cases
-- Latest release notes and updates\
+- Latest release notes and updates
 
 ---
 
