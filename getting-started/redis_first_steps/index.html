@@ -443,36 +443,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#macos-homebrew" class="md-nav__link">
-    <span class="md-ellipsis">
-      macOS (Homebrew)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#linux" class="md-nav__link">
     <span class="md-ellipsis">
       Linux
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#windows" class="md-nav__link">
-    <span class="md-ellipsis">
-      Windows
     </span>
   </a>
   
@@ -1937,36 +1910,9 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      Docker
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#macos-homebrew" class="md-nav__link">
-    <span class="md-ellipsis">
-      macOS (Homebrew)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#linux" class="md-nav__link">
     <span class="md-ellipsis">
       Linux
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#windows" class="md-nav__link">
-    <span class="md-ellipsis">
-      Windows
     </span>
   </a>
   
@@ -2432,7 +2378,9 @@
 <h2 id="starting-your-redis-journey">Starting Your Redis Journey</h2>
 <h3 id="step-1-starting-the-redis-server">Step 1: Starting the Redis Server</h3>
 <p>The Redis server needs to be running before you can connect to it. Here's how to start it, depending on your system:</p>
-<h4 id="docker">Docker</h4>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Docker</label><label for="__tabbed_1_2">macOS (Homebrew)</label><label for="__tabbed_1_3">Linux</label><label for="__tabbed_1_4">Windows</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <p>If you installed Redis using Docker, you have two options:</p>
 <p><strong>Option 1</strong>: If you already created a Redis container before, this starts it again:
 <div class="language-bash highlight"><span class="filename">Docker</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>start<span class="w"> </span>my-redis
@@ -2461,7 +2409,8 @@
 <p class="admonition-title">Port Mapping Explained</p>
 <p>Think of Docker containers like separate computers. The <code>-p 6379:6379</code> creates a "bridge" so when you connect to port 6379 on your computer, it forwards the connection to port 6379 inside the Redis container. This is why you can use <code>redis-cli</code> from your computer to talk to Redis running inside Docker.</p>
 </div>
-<h4 id="macos-homebrew">macOS (Homebrew)</h4>
+</div>
+<div class="tabbed-block">
 <p>If you installed Redis using Homebrew on a Mac, you have two options:</p>
 <p><strong>Option 1 (Recommended)</strong>: Start Redis as a background service - keeps running even if you close terminal:
 <div class="language-bash highlight"><span class="filename">macOS (Homebrew)</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>brew<span class="w"> </span>services<span class="w"> </span>start<span class="w"> </span>redis
@@ -2470,6 +2419,8 @@
 <p><strong>Option 2</strong>: Start Redis manually in your current terminal window - stops when you close terminal:
 <div class="language-bash highlight"><span class="filename">macOS (Homebrew)</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>redis-server
 </span></code></pre></div></p>
+</div>
+<div class="tabbed-block">
 <h4 id="linux">Linux</h4>
 <p>If you installed Redis on Linux, you have two options:</p>
 <p><strong>Option 1 (Recommended)</strong>: Start Redis as a background service:
@@ -2479,7 +2430,8 @@
 <p><strong>Option 2</strong>: Start Redis manually in your current terminal window (for quick tests or development):
 <div class="language-bash highlight"><span class="filename">Linux</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>redis-server
 </span></code></pre></div></p>
-<h4 id="windows">Windows</h4>
+</div>
+<div class="tabbed-block">
 <p>If you installed Redis on Windows:</p>
 <p><strong>Step 1</strong>: Move to the folder where you installed Redis:
 <div class="language-text highlight"><span class="filename">Windows</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>cd C:\Redis
@@ -2512,6 +2464,9 @@
 </ul>
 <p><strong>Think of it like this:</strong> You're telling Docker "Go into my Redis container and run the <code>redis-cli ping</code> command for me"</p>
 <hr />
+</div>
+</div>
+</div>
 <h4 id="for-native-installation-windows-macos-linux">For Native Installation (Windows, macOS, Linux):</h4>
 <p>If you installed Redis directly on your system:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>redis-cli<span class="w"> </span>ping
