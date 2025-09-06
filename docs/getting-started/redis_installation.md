@@ -1,240 +1,239 @@
 # Installing Redis
 
-Ready to get Redis running on your system? This guide covers installation for **Windows**, **macOS**, and **Linux**, plus a beginner-friendly **Docker** option.
+Ready to get Redis running on your system? Choose your platform below:
 
 !!! tip "Recommended for Beginners"
     If you're completely new to Redis, I recommend starting with **Docker** - it's the most consistent across all systems and easiest to manage.
 
 === "Docker"
-## Docker Installation (Recommended)
 
-### Why Docker?
-- **Works on any system** (Windows, macOS, Linux)
-- **No complex setup** - one command to get started
-- **Easy to remove** if you want to uninstall later
-- **Matches production environments**
+    ## Docker Installation (Recommended)
 
-### Prerequisites
-- Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) for your system
+    ### Why Docker?
+    - **Works on any system** (Windows, macOS, Linux)
+    - **No complex setup** - one command to get started
+    - **Easy to remove** if you want to uninstall later
+    - **Matches production environments**
 
-### Installation Steps
+    ### Prerequisites
+    - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) for your system
 
-1. **Pull the Redis image**:
-   ```bash
-   docker pull redis:latest
-   ```
+    ### Installation Steps
 
-2. **Run Redis**:
-(dont worry, will explain these commands further)
-   ```bash
-   docker run --name my-redis -p 6379:6379 -d redis:latest
-   ```
+    1. **Pull the Redis image**:
+       ```bash
+       docker pull redis:latest
+       ```
 
-3. **Connect to Redis**:
-   ```bash
-   docker exec -it my-redis redis-cli
-   ```
+    2. **Run Redis**:
+    (dont worry, will explain these commands further)
+       ```bash
+       docker run --name my-redis -p 6379:6379 -d redis:latest
+       ```
 
-4. **Test it works**:
-   ```redis
-   127.0.0.1:6379> ping
-   PONG
-   127.0.0.1:6379> set hello "world"
-   OK
-   127.0.0.1:6379> get hello
-   "world"
-   ```
+    3. **Connect to Redis**:
+       ```bash
+       docker exec -it my-redis redis-cli
+       ```
 
-!!! success "Success!"
-    If you see `PONG` when you type `ping`, Redis is working perfectly!
+    4. **Test it works**:
+       ```redis
+       127.0.0.1:6379> ping
+       PONG
+       127.0.0.1:6379> set hello "world"
+       OK
+       127.0.0.1:6379> get hello
+       "world"
+       ```
 
-### Docker Useful Commands
+    !!! success "Success!"
+        If you see `PONG` when you type `ping`, Redis is working perfectly!
 
-```bash
-# Start Redis (if stopped)
-docker start my-redis
+    ### Docker Useful Commands
 
-# Stop Redis
-docker stop my-redis
+    ```bash
+    # Start Redis (if stopped)
+    docker start my-redis
 
-# Check if Redis is running
-docker ps
+    # Stop Redis
+    docker stop my-redis
 
-# View Redis logs
-docker logs my-redis
+    # Check if Redis is running
+    docker ps
 
-# Remove Redis (if you want to uninstall)
-docker rm -f my-redis
-```
+    # View Redis logs
+    docker logs my-redis
+
+    # Remove Redis (if you want to uninstall)
+    docker rm -f my-redis
+    ```
 
 === "Windows"
 
-## Windows Installation
+    ## Windows Installation
 
-### Method A: Using Windows Subsystem for Linux (WSL) - Recommended
+    ### Method A: Using Windows Subsystem for Linux (WSL) - Recommended
 
-1. **Install WSL2** (if not already installed):
-   ```powershell
-   wsl --install
-   ```
+    1. **Install WSL2** (if not already installed):
+       ```powershell
+       wsl --install
+       ```
 
-2. **Open WSL terminal** and follow the Linux Ubuntu instructions [below](#option-4-linux-installation).
+    2. **Open WSL terminal** and follow the Linux Ubuntu instructions in the Linux tab.
 
-### Method B: Using Redis for Windows
+    ### Method B: Using Redis for Windows
 
-!!! warning "Note"
-    Microsoft maintains a Windows port, but it's not officially supported by Redis.
+    !!! warning "Note"
+        Microsoft maintains a Windows port, but it's not officially supported by Redis.
 
-1. **Download** from [Redis for Windows releases](https://github.com/tporadowski/redis/releases)
+    1. **Download** from [Redis for Windows releases](https://github.com/tporadowski/redis/releases)
 
-2. **Extract** the ZIP file to `C:\Redis`
+    2. **Extract** the ZIP file to `C:\Redis`
 
-3. **Add to PATH**:
-   - Open System Properties → Advanced → Environment Variables
-   - Add `C:\Redis` to your PATH
+    3. **Add to PATH**:
+       - Open System Properties → Advanced → Environment Variables
+       - Add `C:\Redis` to your PATH
 
-4. **Start Redis**:
-   ```cmd
-   redis-server
-   ```
+    4. **Start Redis**:
+       ```cmd
+       redis-server
+       ```
 
-5. **Connect** (in a new command prompt):
-   ```cmd
-   redis-cli
-   ```
-
+    5. **Connect** (in a new command prompt):
+       ```cmd
+       redis-cli
+       ```
 
 === "macOS"
 
-## macOS Installation
+    ## macOS Installation
 
-### Method A: Using Homebrew (Recommended)
+    ### Method A: Using Homebrew (Recommended)
 
-1. **Install Homebrew** (if not installed):
-   ```bash
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   ```
+    1. **Install Homebrew** (if not installed):
+       ```bash
+       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+       ```
 
-2. **Install Redis**:
-   ```bash
-   brew install redis
-   ```
+    2. **Install Redis**:
+       ```bash
+       brew install redis
+       ```
 
-3. **Start Redis**:
-   ```bash
-   brew services start redis
-   ```
+    3. **Start Redis**:
+       ```bash
+       brew services start redis
+       ```
 
-4. **Connect to Redis**:
-   ```bash
-   redis-cli
-   ```
+    4. **Connect to Redis**:
+       ```bash
+       redis-cli
+       ```
 
-### Method B: Manual Installation
+    ### Method B: Manual Installation
 
-1. **Install Xcode command line tools**:
-   ```bash
-   xcode-select --install
-   ```
+    1. **Install Xcode command line tools**:
+       ```bash
+       xcode-select --install
+       ```
 
-2. **Download and compile Redis**:
-   ```bash
-   wget https://download.redis.io/redis-stable.tar.gz
-   tar xzf redis-stable.tar.gz
-   cd redis-stable
-   make
-   ```
+    2. **Download and compile Redis**:
+       ```bash
+       wget https://download.redis.io/redis-stable.tar.gz
+       tar xzf redis-stable.tar.gz
+       cd redis-stable
+       make
+       ```
 
-3. **Install Redis**:
-   ```bash
-   sudo make install
-   ```
+    3. **Install Redis**:
+       ```bash
+       sudo make install
+       ```
 
-### macOS Management Commands
+    ### macOS Management Commands
 
-```bash
-# Start Redis as a service
-brew services start redis
+    ```bash
+    # Start Redis as a service
+    brew services start redis
 
-# Stop Redis service
-brew services stop redis
+    # Stop Redis service
+    brew services stop redis
 
-# Restart Redis
-brew services restart redis
-
-```
+    # Restart Redis
+    brew services restart redis
+    ```
 
 === "Linux"
 
-## Linux Installation
+    ## Linux Installation
 
-### Ubuntu/Debian
+    ### Ubuntu/Debian
 
-1. **Update package list**:
-   ```bash
-   sudo apt update
-   ```
+    1. **Update package list**:
+       ```bash
+       sudo apt update
+       ```
 
-2. **Install Redis**:
-   ```bash
-   sudo apt install redis-server
-   ```
+    2. **Install Redis**:
+       ```bash
+       sudo apt install redis-server
+       ```
 
-3. **Start Redis service**:
-   ```bash
-   sudo systemctl start redis-server
-   ```
+    3. **Start Redis service**:
+       ```bash
+       sudo systemctl start redis-server
+       ```
 
-4. **Enable auto-start**:
-   ```bash
-   sudo systemctl enable redis-server
-   ```
+    4. **Enable auto-start**:
+       ```bash
+       sudo systemctl enable redis-server
+       ```
 
-5. **Test connection**:
-   ```bash
-   redis-cli ping
-   ```
+    5. **Test connection**:
+       ```bash
+       redis-cli ping
+       ```
 
-### CentOS/RHEL/Fedora
+    ### CentOS/RHEL/Fedora
 
-1. **Install EPEL repository** (CentOS/RHEL only):
-   ```bash
-   sudo yum install epel-release
-   ```
+    1. **Install EPEL repository** (CentOS/RHEL only):
+       ```bash
+       sudo yum install epel-release
+       ```
 
-2. **Install Redis**:
-   ```bash
-   # CentOS/RHEL
-   sudo yum install redis
-   
-   # Fedora
-   sudo dnf install redis
-   ```
+    2. **Install Redis**:
+       ```bash
+       # CentOS/RHEL
+       sudo yum install redis
+       
+       # Fedora
+       sudo dnf install redis
+       ```
 
-3. **Start and enable Redis**:
-   ```bash
-   sudo systemctl start redis
-   sudo systemctl enable redis
-   ```
+    3. **Start and enable Redis**:
+       ```bash
+       sudo systemctl start redis
+       sudo systemctl enable redis
+       ```
 
-### Linux Management Commands
+    ### Linux Management Commands
 
-```bash
-# Check Redis status
-sudo systemctl status redis
+    ```bash
+    # Check Redis status
+    sudo systemctl status redis
 
-# Start Redis
-sudo systemctl start redis
+    # Start Redis
+    sudo systemctl start redis
 
-# Stop Redis
-sudo systemctl stop redis
+    # Stop Redis
+    sudo systemctl stop redis
 
-# Restart Redis
-sudo systemctl restart redis
+    # Restart Redis
+    sudo systemctl restart redis
 
-# View Redis logs
-sudo journalctl -u redis
-```
+    # View Redis logs
+    sudo journalctl -u redis
+    ```
 
 ---
 
