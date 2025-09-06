@@ -243,15 +243,18 @@ After installation, let's verify everything works correctly:
 
 ### 1. Check Redis is Running
 
-```bash
-redis-cli ping
-```
-**OR**
+=== "Win/Mac/Linux"
 
-```bash title="For Docker"
-docker exec -it my-redis redis-cli ping 
-#everytime for docker this command will be used
-```
+      ```bash
+      redis-cli ping
+      ```
+
+=== "Docker"
+
+      ```bash
+      docker exec -it my-redis redis-cli ping 
+      #everytime for docker this command will be used
+      ```
 
 **Expected output**: `PONG`
 

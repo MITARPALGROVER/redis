@@ -8,108 +8,112 @@ Congratulations! You have Redis installed. Now let's take your first steps and g
 
 The Redis server needs to be running before you can connect to it. Here's how to start it, depending on your system:
 
-#### Docker
-If you installed Redis using Docker, you have two options:
 
-**Option 1**: If you already created a Redis container before, this starts it again:
-```bash title="Docker"
-docker start my-redis
-```
+=== "Docker"
+    If you installed Redis using Docker, you have two options:
 
-**OR**
+    **Option 1**: If you already created a Redis container before, this starts it again:
+    ```bash title="Docker"
+    docker start my-redis
+    ```
 
-**Option 2**: If you haven't created a container yet, this creates and starts a new one:
-```bash title="Docker"
-docker run --name my-redis -p 6379:6379 -d redis:latest
-```
+    **OR**
 
-**What these parameters mean:**
+    **Option 2**: If you haven't created a container yet, this creates and starts a new one:
+    ```bash title="Docker"
+    docker run --name my-redis -p 6379:6379 -d redis:latest
+    ```
 
-- `--name my-redis`: Gives your container a name for easy reference
-- `-p 6379:6379`: Maps port 6379 from inside the container to port 6379 on your computer
+    **What these parameters mean:**
 
-    - **First 6379**: Port on your computer (host)
-    - **Second 6379**: Port inside the Docker container
-    - **Why both same?** Redis uses port 6379 by default, so we keep it consistent
+    - `--name my-redis`: Gives your container a name for easy reference
+    - `-p 6379:6379`: Maps port 6379 from inside the container to port 6379 on your computer
 
-- `-d`: Runs Redis in the background (detached mode)
-- `redis:latest`: Uses the latest Redis version
+        - **First 6379**: Port on your computer (host)
+        - **Second 6379**: Port inside the Docker container
+        - **Why both same?** Redis uses port 6379 by default, so we keep it consistent
 
-!!! info "Port Mapping Explained"
-    Think of Docker containers like separate computers. The `-p 6379:6379` creates a "bridge" so when you connect to port 6379 on your computer, it forwards the connection to port 6379 inside the Redis container. This is why you can use `redis-cli` from your computer to talk to Redis running inside Docker.
+    - `-d`: Runs Redis in the background (detached mode)
+    - `redis:latest`: Uses the latest Redis version
 
-#### macOS (Homebrew)
-If you installed Redis using Homebrew on a Mac, you have two options:
+    !!! info "Port Mapping Explained"
+        Think of Docker containers like separate computers. The `-p 6379:6379` creates a "bridge" so when you connect to port 6379 on your computer, it forwards the connection to port 6379 inside the Redis container. This is why you can use `redis-cli` from your computer to talk to Redis running inside Docker.
 
-**Option 1 (Recommended)**: Start Redis as a background service - keeps running even if you close terminal:
-```bash title="macOS (Homebrew)"
-brew services start redis
-```
 
-**OR**
+=== "macOS (Homebrew)"
+    If you installed Redis using Homebrew on a Mac, you have two options:
 
-**Option 2**: Start Redis manually in your current terminal window - stops when you close terminal:
-```bash title="macOS (Homebrew)"
-redis-server
-```
+    **Option 1 (Recommended)**: Start Redis as a background service - keeps running even if you close terminal:
+    ```bash title="macOS (Homebrew)"
+    brew services start redis
+    ```
 
-#### Linux
-If you installed Redis on Linux, you have two options:
+    **OR**
 
-**Option 1 (Recommended)**: Start Redis as a background service:
-```bash title="Linux"
-sudo systemctl start redis
-```
+    **Option 2**: Start Redis manually in your current terminal window - stops when you close terminal:
+    ```bash title="macOS (Homebrew)"
+    redis-server
+    ```
+    
+=== "Linux"
+    #### Linux
+    If you installed Redis on Linux, you have two options:
 
-**OR**
+    **Option 1 (Recommended)**: Start Redis as a background service:
+    ```bash title="Linux"
+    sudo systemctl start redis
+    ```
 
-**Option 2**: Start Redis manually in your current terminal window (for quick tests or development):
-```bash title="Linux"
-redis-server
-```
+    **OR**
 
-#### Windows
-If you installed Redis on Windows:
+    **Option 2**: Start Redis manually in your current terminal window (for quick tests or development):
+    ```bash title="Linux"
+    redis-server
+    ```
 
-**Step 1**: Move to the folder where you installed Redis:
-```cmd title="Windows"
-cd C:\Redis
-```
+=== "Windows"
+    If you installed Redis on Windows:
 
-**OR**
+    **Step 1**: Move to the folder where you installed Redis:
+    ```cmd title="Windows"
+    cd C:\Redis
+    ```
 
-**Step 2**: Start the Redis server:
-```cmd title="Windows"
-redis-server.exe
-```
+    **OR**
 
-!!! tip "Background vs Foreground"
-    - **Service/Background**: Redis runs in the background, terminal is free to use
-    - **Manual/Foreground**: Redis runs in the current terminal window, shows logs
+    **Step 2**: Start the Redis server:
+    ```cmd title="Windows"
+    redis-server.exe
+    ```
 
-### Step 2: Verify Redis is Running
+    !!! tip "Background vs Foreground"
+        - **Service/Background**: Redis runs in the background, terminal is free to use
+        - **Manual/Foreground**: Redis runs in the current terminal window, shows logs
 
-Now let's check if Redis is running properly. The command depends on how you installed Redis:
+    ### Step 2: Verify Redis is Running
 
-#### For Docker Users:
-If you're using Docker, you need to run the command **inside** the Docker container:
+    Now let's check if Redis is running properly. The command depends on how you installed Redis:
 
-```bash
-docker exec -it my-redis redis-cli ping
-```
+    #### For Docker Users:
+    If you're using Docker, you need to run the command **inside** the Docker container:
 
-**Let's break down this command:**
+    ```bash
+    docker exec -it my-redis redis-cli ping
+    ```
 
-- `docker exec`: Execute a command in a running Docker container
-- `-it`: Two flags combined:
-  - `-i`: Interactive mode (keep input open)
-  - `-t`: Allocate a pseudo-terminal (makes it look like a real terminal)
-- `my-redis`: The name of your Redis container
-- `redis-cli ping`: The actual Redis command to run inside the container
+    **Let's break down this command:**
 
-**Think of it like this:** You're telling Docker "Go into my Redis container and run the `redis-cli ping` command for me"
+    - `docker exec`: Execute a command in a running Docker container
+    - `-it`: Two flags combined:
+    - `-i`: Interactive mode (keep input open)
+    - `-t`: Allocate a pseudo-terminal (makes it look like a real terminal)
+    - `my-redis`: The name of your Redis container
+    - `redis-cli ping`: The actual Redis command to run inside the container
 
----
+    **Think of it like this:** You're telling Docker "Go into my Redis container and run the `redis-cli ping` command for me"
+
+    ---
+
 
 #### For Native Installation (Windows, macOS, Linux):
 If you installed Redis directly on your system:
